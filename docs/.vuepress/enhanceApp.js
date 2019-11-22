@@ -7,11 +7,11 @@ import './public/css/devices.min.css'
 function renderGitment(fullPath) {
   const gitment = new Gitment({
     id: fullPath,
-    owner: 'codeteenager',  // 必须是你自己的github 账号
+    owner: 'JoeHR',  // 必须是你自己的github 账号
     repo: 'BlogGitment', // 上一个准备的 github 仓库
     oauth: {
-      client_id: '139e2ba8d93852dc036f', // 第一步注册 OAuth application 后获取到的 Client ID
-      client_secret: '9e8e37e78cb38e8cd4969e5f704baeab16ff502f', // 第一步注册 OAuth application 后获取到的 Clien Secret
+      client_id: '03b80e713d2c06457d5f', // 第一步注册 OAuth application 后获取到的 Client ID
+      client_secret: '685928a65dd13d1561e1d483213470806a6ff489', // 第一步注册 OAuth application 后获取到的 Clien Secret
     }
   })
   gitment.render('comments-container')
