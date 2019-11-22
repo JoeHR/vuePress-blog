@@ -58,7 +58,8 @@ module.exports = {
         ["linux02", "ssh密钥方式远程链接linux"]
       ],
       '/other/': [
-        ""
+        "",
+        "gitment"
       ]
     }
   },
