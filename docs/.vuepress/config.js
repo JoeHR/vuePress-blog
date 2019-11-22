@@ -21,7 +21,7 @@ module.exports = {
       },
       { text: '阅读日志', link: '/readlog' },
       { text: '关于', link: '/about/' },
-      { text: 'Github', link: 'https://www.github.com/codeteenager' },
+      { text: 'Github', link: 'https://github.com/JoeHR' },
     ],
     sidebar: {
       '/test/': [
