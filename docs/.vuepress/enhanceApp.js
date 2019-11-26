@@ -11,7 +11,7 @@ function renderGitment(fullPath) {
     repo: 'BlogGitment', // 上一个准备的 github 仓库
     oauth: {
       client_id: '03b80e713d2c06457d5f', // 第一步注册 OAuth application 后获取到的 Client ID
-      client_secret: '685928a65dd13d1561e1d483213470806a6ff489', // 第一步注册 OAuth application 后获取到的 Clien Secret
+      client_secret: '798fe0885b1f18bc5a786b2edc086fa2c2c2b8aa', // 第一步注册 OAuth application 后获取到的 Clien Secret
     }
   })
   gitment.render('comments-container')
