@@ -1,31 +1,79 @@
-## HTML5
+# 每日一道面试题
 
-MDN 上 对 `html5`的描述
+## 第一题：写 React / Vue 项目时为什么要在列表组件中写 key，其作用是什么
 
-`HTML5` 是定义 `HTML`标准的最新的版本。 该术语通过两个不同的概念来表现 ：
+vue 和 react 都是采用 diff 算法来对比新旧虚拟节点，从而更新节点。在 vue 的 diff 函数中（建议先了解一下 diff 算法过程）。
+在交叉对比中，当新节点跟旧节点`头尾交叉对比`没有结果时，会根据新节点的 key 去对比旧节点数组中的 key，从而找到相应旧节点（这里对应的是一个 key => index 的 map 映射）。如果没找到就认为是一个新增节点。而如果没有 key，那么就会采用遍历查找的方式去找到对应的旧节点。一种一个 map 映射，另一种是遍历查找。相比而言。map 映射的速度更快。
 
-- 它是一个新版本的**HTML**语言，具有新的元素，属性和行为，
-- 它有更大的**技术**集，允许构建更多样化和更强大的网站和应用程序。这个集合有时称为 HTML5 和它的朋友们，不过大多数时候仅缩写为一个词 **\*HTML5\***。
+vue 部分源码如下：
 
-根据其功能分为几个组
+```js
+// vue项目  src/core/vdom/patch.js  -488行
+// 以下是为了阅读性进行格式化后的代码
 
-- **语义**：能够让你更恰当地描述你的内容是什么
-- **连通性**：能够让你和服务器之间通过创新的新技术方法进行通信
+// oldCh 是一个旧虚拟节点数组
+if (isUndef(oldKeyToIdx)) {
+  oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);
+}
+if (isDef(newStartVnode.key)) {
+  // map 方式获取
+  idxInOld = oldKeyToIdx[newStartVnode.key];
+} else {
+  // 遍历方式获取
+  idxInOld = findIdxInOld(newStartVnode, oldCh, oldStartIdx, oldEndIdx);
+}
+```
 
-- **离线 & 存储**：能够让网页在客户端本地存储数据以及更高效地离线运行
-- **多媒体**：使 video 和 audio 成为了在所有 Web 中的一等公民
-- **2D/3D 绘图 & 效果**：提供了一个更加分化范围的呈现选择
-- **性能 & 集成**：提供了非常显著的性能优化和更有效的计算机硬件使用
-- **设备访问 Device Access**：能够处理各种输入和输出设备
-- **样式设计**: 让作者们来创作更加复杂的主题吧
+创建 map 函数
 
-## 关于 HTML5 语音 Web Speech API
+```js
+function createKeyToOldIdx(children, beginIdx, endIdx) {
+  let i, key;
+  const map = {};
+  for (i = beginIdx; i <= endIdx; ++i) {
+    key = children[i].key;
+    if (isDef(key)) map[key] = i;
+  }
+  return map;
+}
+```
 
-HTML5 中和 Web Speech 相关的 API 实际上有两类
+遍历寻找
 
-- 语音识别(Speech Recognition)
-- 语音合成(Speech Synthesis)
+```js
+// sameVnode 是对比新旧节点是否相同的函数
+function findIdxInOld(node, oldCh, start, end) {
+  for (let i = start; i < end; i++) {
+    const c = oldCh[i];
 
-实际上指的分别是 语音转文字 和 文字转语音
+    if (isDef(c) && sameVnode(node, c)) return i;
+  }
+}
+```
 
-Speech Synthesis 为什么称为“合成”呢？比方说你 Siri 发音“你好，世界！” 实际上是把“你”、“好”、“世”、“界”这 4 个字的读音给合并在一起，因此，称为“语音合成”。
+## 第二题：['1', '2', '3'].map(parseInt) what & why ?
+
+第一眼看到这个题目的时候，脑海跳出的答案是 [1, 2, 3]，但是**真正的答案是[1, NaN, NaN]**。
+
+- 首先让我们回顾一下，map 函数的第一个参数 callback：
+
+```js
+var new_array = arr.map(function callback(currentValue[, index[, array]]) {
+// Return  element for new_array
+}[, thisArg])这个callback一共可以接收三个参数，其中第一个参数代表当前被处理的元素，而第二个参数代表该元素的索引。
+```
+
+- 而 parseInt 则是用来解析字符串的，使字符串成为指定基数的整数。
+  `parseInt(string, radix)`
+  接收两个参数，第一个表示被处理的值（字符串），第二个表示为解析时的基数。
+- 了解这两个函数后，我们可以模拟一下运行情况
+
+1. parseInt('1', 0) //radix 为 0 时，且 string 参数不以“0x”和“0”开头时，按照 10 为基数处理。这个时候返回 1
+2. parseInt('2', 1) //基数为 1（1 进制）表示的数中，最大值小于 2，所以无法解析，返回 NaN
+3. parseInt('3', 2) //基数为 2（2 进制）表示的数中，最大值小于 3，所以无法解析，返回 NaN
+
+- map 函数返回的是一个数组，所以最后结果为[1, NaN, NaN]
+- 最后附上 MDN 上对于这两个函数的链接，具体参数大家可以到里面看
+
+1. [parseInt](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/parseInt)
+2. [map](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
