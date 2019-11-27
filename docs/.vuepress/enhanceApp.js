@@ -11,7 +11,7 @@ function renderGitment(fullPath) {
     repo: 'BlogGitment', // 上一个准备的 github 仓库
     oauth: {
       client_id: '03b80e713d2c06457d5f', // 第一步注册 OAuth application 后获取到的 Client ID
-      client_secret: '3cd83b5b28f121f38e2386fb32a89913ffab218a', // 第一步注册 OAuth application 后获取到的 Clien Secret
+      client_secret: 'df570dc96a027eee0bda106007160a1e48cdd07c', // 第一步注册 OAuth application 后获取到的 Clien Secret
     }
   })
   gitment.render('comments-container')
@@ -28,14 +28,14 @@ function integrateGitment(router) {
 
   router.afterEach(to => {
     // 已被初始化则根据页面重新渲染 评论区
-    if (scriptGitment.onload && widnow.Gitment) {
+    if (scriptGitment.onload && window.Gitment) {
       renderGitment(to.fullPath)
     } else {
       const commentsContainer = document.createElement('div')
       commentsContainer.id = 'comments-container'
       commentsContainer.classList.add('content')
       const $page = document.querySelector('.page')
-      if ($page && Gitment) {
+      if ($page && window.Gitment) {
         $page.appendChild(commentsContainer)
         renderGitment(to.fullPath)
       }

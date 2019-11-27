@@ -4,7 +4,7 @@
 
 ## Docker 搭建 gitlab
 
-[官方安装文档]( https://docs.gitlab.com/omnibus/docker/ ) 
+[官方安装文档](  https://docs.gitlab.com/omnibus/docker/README.html  ) 
 
 官方文档 给出的搭建 gitlab命令只有下面这条命令：
 
@@ -93,4 +93,54 @@ docker logs -f gitlab_test
 ```
 
 [gitlab访问]（ http://122.51.167.54:13800/ ）
+
+
+
+
+
+## 使用 docker-compose 来安装 Gitlab
+
+### 1、先删除 上面 安装的 Gitlab
+
+- `docker ps` 或者 `docker ps -a`
+
+```shell
+[root@VM_0_6_centos ~]# docker ps -a
+CONTAINER ID        IMAGE                     COMMAND                  CREATED             STATUS                PORTS                                                   NAMES
+0308ae838507        gitlab/gitlab-ce:latest   "/assets/wrapper"        6 days ago          Up 6 days (healthy)   443/tcp, 0.0.0.0:13822->22/tcp, 0.0.0.0:13800->80/tcp   gitlab_test
+d68f1d62a0f2        mysql                     "docker-entrypoint.s…"   6 days ago          Up 6 days             33060/tcp, 0.0.0.0:28003->3306/tcp                      home_mysql2_1
+37fd5e41efed        mysql
+```
+
+- 停止 Gitlab_test 镜像：`docker stop gitlab_test`
+
+- 删除 gitlab_test 镜像： docker rm gitlab_test
+
+### 2、创建编辑 docker-compose.yml 文件
+
+>  **前提是 已安装好  docker-compose **
+
+- 进入 到 某个目录（自定义）
+- 创建或编辑已有的 docker-compose.yml 文件
+
+```
+# docker-compose.yml
+
+web:
+  image: 'gitlab/gitlab-ce:latest'
+  restart: always
+  hostname: '122.51.167.54'
+  environment:
+    GITLAB_OMNIBUS_CONFIG: |
+      external_url 'http://122.51.167.54'
+      # Add any other gitlab.rb configuration here, each on its own line
+  ports:
+    - '13800:80'
+    - '13822:22'
+  volumes:
+    - '/srv/gitlab/config:/etc/gitlab'
+    - '/srv/gitlab/logs:/var/log/gitlab'
+    - '/srv/gitlab/data:/var/opt/gitlab'
+
+```
 

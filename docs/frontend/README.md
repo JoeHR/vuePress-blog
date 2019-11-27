@@ -77,3 +77,69 @@ var new_array = arr.map(function callback(currentValue[, index[, array]]) {
 
 1. [parseInt](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/parseInt)
 2. [map](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+
+## 第三题：什么是防抖和节流？有什么区别？如何实现？
+
+函数防抖（debounce）：当持续触发事件时，一定时间段内没有再触发事件，事件处理函数才会执行一次，如果设定的时间到来之前，又一次触发了事件，就重新开始延时。如下图，持续触发scroll事件时，并不执行handle函数，当1000毫秒内没有触发scroll事件时，才会延时触发scroll事件。
+
+ 函数节流（throttle）：当持续触发事件时，保证一定时间段内只调用一次事件处理函数。节流通俗解释就比如我们水龙头放水，阀门一打开，水哗哗的往下流，秉着勤俭节约的优良传统美德，我们要把水龙头关小点，最好是如我们心意按照一定规律在某个时间间隔内一滴一滴的往下滴。
+
+区别：在于执行的频率不同，一个是 持续触发事件时，只执行最后一次，限定执行次数；一个是持续触发事件时，每隔一定的时间执行一次， 限定执行频率
+
+```js
+/**
+ * 触发高频事件后n秒内函数只会执行一次，如果n秒内高频事件再次被触发，则重新计算时间
+ * 函数防抖 (只执行最后一次点击) 
+ * 每次触发事件时都取消之前的延时调用
+ * @param fn
+ * @param delay
+ * @returns {Function}
+ * @constructor
+ */
+ const Debounce = (fn, t) => {
+  let delay = t || 500;
+  let timer;
+  return function () {
+      let args = arguments;
+      if(timer){
+          clearTimeout(timer);
+      }
+      timer = setTimeout(() => {
+          timer = null;
+          fn.apply(this, args);
+      }, delay);
+  }
+}
+
+
+/**
+ * 高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率
+ * 函数节流
+ * 每次触发事件时都判断当前是否有等待执行的延时函数
+ * @param fn
+ * @param interval
+ * @returns {Function}
+ * @constructor
+ */
+ const Throttle = (fn, t) => {
+    let last;
+    let timer;
+    let interval = t || 500;
+    return function () {
+        let args = arguments;
+        let now = +new Date();
+        if (last && now - last < interval) {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                last = now;
+                fn.apply(this, args);
+            }, interval);
+        } else {
+            last = now;
+            fn.apply(this, args);
+        }
+    }
+}
+
+```
+
