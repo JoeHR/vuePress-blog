@@ -20,9 +20,9 @@ function renderGitment(fullPath) {
 function integrateGitment(router) {
   const linkGitment = document.createElement('link')
   const scriptGitment = document.createElement('script')
-  linkGitment.href = 'https://imsun.github.io/gitment/style/default.css'
+  linkGitment.href = 'https://jjeejj.github.io/css/gitment.css'
   linkGitment.rel = 'stylesheet'
-  scriptGitment.src = 'https://imsun.github.io/gitment/dist/gitment.browser.js'
+  scriptGitment.src = 'https://www.wenjunjiang.win/js/gitment.js'
   document.body.appendChild(linkGitment)
   document.body.appendChild(scriptGitment)
 
@@ -33,10 +33,12 @@ function integrateGitment(router) {
     } else {
       const commentsContainer = document.createElement('div')
       commentsContainer.id = 'comments-container'
-      commentsContainer.classList.add('content')
+      commentsContainer.classList.add('theme-default-content')
       const $page = document.querySelector('.page')
       if ($page && window.Gitment) {
-        $page.appendChild(commentsContainer)
+        if (!document.querySelector('#comments-container')) {
+          $page.appendChild(commentsContainer)
+        }
         renderGitment(to.fullPath)
       }
     }
