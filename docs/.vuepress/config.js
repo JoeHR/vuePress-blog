@@ -18,6 +18,7 @@ module.exports = {
           { text: '前端', link: '/frontend/' },
           { text: 'linux', link: '/linux/' },
           { text: '杂文', link: '/other/' },
+          { text: 'Node', link: '/node/' },
         ]
       },
       { text: '阅读日志', link: '/readlog' },
@@ -52,15 +53,26 @@ module.exports = {
             ["css03", "css冷门技巧"],
           ]
         },
+        {
+          title: 'Vue学习',
+          collapsable: false,
+          children: [
+            ["vue01", "vue源码学习笔记01"]
+          ]
+        },
       ],
       '/linux/': [
         "",
         ["linux01", "docker入门之安装教程"],
-        ["linux02", "ssh密钥方式远程链接linux"]
+        ["linux02", "ssh密钥方式远程链接linux"],
+        "linux03"
       ],
       '/other/': [
         "",
         "gitment"
+      ],
+      '/node': [
+        ""
       ]
     }
   },
