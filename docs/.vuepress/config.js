@@ -41,7 +41,8 @@ module.exports = {
           collapsable: false,
           children: [
             "",
-            ['js01', '语音合成']
+            ['js01', '语音合成'],
+            ['rollup01', 'rollupJs 打包工具']
           ]
         },
         {

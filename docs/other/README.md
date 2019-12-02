@@ -39,7 +39,7 @@
 
 下面是一些常见的控制流程：
 
-![img](/img/other/other00_02.png)
+![](../.vuepress/public/img/other/other00_02.png)
 
 ### 节点判定法
 
@@ -94,13 +94,13 @@ M = E − N + 2P
 
 前两个，边和节点都是数据结构途中最基本的概念：
 
-![img](/img/other/other00_03.png)
+![](../.vuepress/public/img/other/other00_03.png)
 
 P 代表图中独立组件的数目，独立组件是什么意思呢？来看看下面两个图，左侧为连通图，右侧为非连通图：
 
 - 连通图： 对于图中任意两个顶点都是连通的
 
-![img](/img/other/other00_04.png)
+![](../.vuepress/public/img/other/other00_04.png)
 
 一个连通图即为图中的一个独立组件，所以左侧图中独立组件的数目为 1，右侧则有两个独立组件。
 
@@ -116,7 +116,7 @@ P 代表图中独立组件的数目，独立组件是什么意思呢？来看看
 
 通过抽象配置将复杂的逻辑判断进行简化。例如下面的代码，根据用户的选择项执行相应的操作，重构后降低了代码复杂度，并且如果之后有新的选项，直接加入配置即可，而不需要再去深入代码逻辑中进行改动：
 
-![img](/img/other/other00_05.png)
+![](../.vuepress/public/img/other/other00_05.png)
 
 ### 单一职责 - 提炼函数
 
@@ -128,37 +128,37 @@ P 代表图中独立组件的数目，独立组件是什么意思呢？来看看
 
 关键是如何定义这 “一件事” ，如何将代码中的逻辑进行抽象，有效的提炼函数有利于降低代码复杂度和降低维护成本。
 
-![img](/img/other/other00_06.png)
+![](../.vuepress/public/img/other/other00_06.png)
 
 ### 使用 break 和 return 代替控制标记
 
 我们经常会使用一个控制标记来标示当前程序运行到某一状态，很多场景下，使用 `break` 和 `return` 可以代替这些标记并降低代码复杂度。
 
-![img](/img/other/other00_07.png)
+![](../.vuepress/public/img/other/other00_07.png)
 
 ### 用函数取代参数
 
 `setField` 和 `getField` 函数就是典型的函数取代参数，如果么有 `setField、getField` 函数，我们可能需要一个很复杂的 `setValue、getValue` 来完成属性赋值操作：
 
-![img](/img/other/other00_08.png)
+![](../.vuepress/public/img/other/other00_08.png)
 
 ### 简化条件判断 - 逆向条件
 
 某些复杂的条件判断可能逆向思考后会变的更简单。
 
-![img](/img/other/other00_09.png)
+![](../.vuepress/public/img/other/other00_09.png)
 
 ### 简化条件判断 -合并条件
 
 将复杂冗余的条件判断进行合并。
 
-![img](/img/other/other00_10.png)
+![](../.vuepress/public/img/other/other00_10.png)
 
 ### 简化条件判断 - 提取条件
 
 将复杂难懂的条件进行语义化提取。
 
-![img](/img/other/other00_11.png)
+![](../.vuepress/public/img/other/other00_11.png)
 
 ## 圈复杂度检测方法
 
@@ -345,4 +345,4 @@ filePath.replace(process.cwd(), '').trim()
   - 代码分析报告
   - ...
 
-![img](/img/other/other00_12.png)
+![](../.vuepress/public/img/other/other00_12.png)
