@@ -19,6 +19,7 @@ module.exports = {
           { text: 'linux', link: '/linux/' },
           { text: '杂文', link: '/other/' },
           { text: 'Node', link: '/node/' },
+          { text: 'Python', link: '/python/' },
         ]
       },
       { text: '阅读日志', link: '/readlog' },
@@ -42,7 +43,9 @@ module.exports = {
           children: [
             "",
             ['js01', '语音合成'],
-            ['rollup01', 'rollupJs 打包工具']
+            ['rollup01', 'rollupJs 打包工具'],
+            ['performance', 'performance性能调试工具'],
+            ['mui', 'muiJS']
           ]
         },
         {
@@ -73,6 +76,9 @@ module.exports = {
         "gitment"
       ],
       '/node': [
+        ""
+      ],
+      '/python': [
         ""
       ]
     }

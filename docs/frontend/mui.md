@@ -139,3 +139,12 @@ $ yarn start
 如果顺利，在浏览器打开 [http://localhost:8000](http://localhost:8000/) 可看到以下界面，
 
  ![img](../.vuepress/public/img/frontend/umi-01-01.png) 
+
+## umi 中使用scss
+
+在 umi 中可以直接使用 css,但是并不支持 scss,需要加两个 loader才能使用
+
+```sh
+$ npm i -S-D node-sass sass-loader
+```
+

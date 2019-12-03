@@ -2,7 +2,7 @@
 
 源码的结构为 ：
 
-![](../\.vuepress\public\img\frontend\vue01-01.png)
+![](../.vuepress/public/img/frontend/vue-01-01.png)
 
 ## 从入口开始
 
