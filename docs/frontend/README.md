@@ -344,6 +344,12 @@ Scavenge 算法主要就是解决内存碎片的问题，在进行一顿复制�
 
 >  解释2：虚拟DOM将DOM转换为一颗js树。diff算法逐级的进行比较、删除、新增操作。但是如果存在多个相同的元素可能比浪费性能，所以React和Vue引用key值进行区分。 
 
+文档对象模型或 DOM 定义了一个接口，该接口允许 JavaScript 之类的语言访问和操作 HTML 文档。元素由树中的节点表示，并且接口允许我们操纵它们。但是此接口需要付出代价，大量非常频繁的 DOM 操作会使页面速度变慢。
+
+Vue 通过在内存中实现文档结构的虚拟表示来解决此问题，其中虚拟节点（VNode）表示 DOM 树中的节点。当需要操纵时，可以在虚拟 DOM的 内存中执行计算和操作，而不是在真实 DOM 上进行操纵。这自然会更快，并且允许虚拟 DOM 算法计算出最优化的方式来更新实际 DOM 结构。
+
+一旦计算出，就将其应用于实际的 DOM 树，这就提高了性能，这就是为什么基于虚拟 DOM 的框架（例如 Vue 和 React）如此突出的原因。
+
 ### 为什么DOM 渲染慢？
 
  ![img](../.vuepress/public/img/frontend/01-08.png) 
@@ -389,3 +395,200 @@ Virtual DOM render + diff 显然比渲染 html 字符串要慢，但是！它依
 
  虚拟 DOM 本质上是 JavaScript 对象,而 DOM 与平台强相关，相比之下虚拟 DOM 可以进行更方便地跨平台操作，例如服务器渲染、weex 开发等等。 
 
+## 第七题、什么是渲染函数？举个例子
+
+ue 允许我们以多种方式构建模板，其中最常见的方式是只把 HTML 与特殊指令和 mustache 标签一起用于响应功能。但是你也可以通过 JavaScript 使用特殊的函数类（称为渲染函数）来构建模板。这些函数与编译器非常接近，这意味着它们比其他模板类型更高效、快捷。由于你使用 JavaScript 编写渲染函数，因此可以在需要的地方自由使用该语言直接添加自定义函数。
+
+对于标准 HTML 模板的高级方案非常有用。
+
+ **这里是用 HTML 作为模板的 Vue 程序** 
+
+```javascript
+new Vue({
+  el: '#app',
+  data: {
+    fruits: ['Apples', 'Oranges', 'Kiwi']
+  },
+  template:
+      `<div>
+         <h1>Fruit Basket</h1>
+         <ol>
+           <li v-for="fruit in fruits">{{ fruit }}</li>
+         </ol>
+      </div>`
+});
+
+```
+
+ **这里是用渲染函数开发的同一个程序：** 
+
+```javascript
+new Vue({
+  el: '#app',
+  data: {
+    fruits: ['Apples', 'Oranges', 'Kiwi']
+  },
+  render: function(createElement) {
+    return createElement('div', [
+      createElement('h1', 'Fruit Basket'),
+      createElement('ol', this.fruits.map(function(fruit) { 
+        return createElement('li', fruit); 
+      }))
+    ]);
+  }
+});
+
+```
+
+ **输出：** 
+
+Fruit Basket
+
+1. Apples
+2. Oranges
+3. Kiwi
+
+在上面的例子中，我们用了一个函数，它返回一系列 `createElement()` 调用，每个调用负责生成一个元素。尽管 v-for 指令在基于 HTML 的模板中起作用，但是当使用渲染函数时，可以简单地用标准 `.map()` 函数遍历 fruits 数据数组。
+
+## 第八题、在大型 Vue 程序中管理状态的推荐方法是什么？为什么？
+
+当程序在功能和代码方面不断增长时，状态管理会变得困难，并且使用无穷无尽的下游网络 prop 和上游事件当然不是明智的决定。在这种情况下，有必要将状态管理转移到中央管理系统。 Vue 生态系统中提供了 Vuex，它是官方的状态管理库，也是推荐用于集中存储状态的模式。
+
+Vuex 允许维护中央状态。组件将 Vuex 用作响应性数据存储，并在状态更新时进行更新。多个或者不相关的组件可以依赖于相同的中央存储。
+
+在这种情况下，Vue 充当纯 View 层。要修改状态，视图层（例如按钮或交互式组件）需要发出 Vuex `Action`，然后执行所需的任务。为了更新或修改状态，Vuex 提供了 `Mutations`。
+
+这个工作流程的目的是留下可用的操作痕迹。
+
+
+
+## 第九题、vue路由传参的三种基本方式
+
+ 现有如下场景，点击父组件的li元素跳转到子组件中，并携带参数，便于子组件获取数据。 
+
+
+
+父组件中
+
+```vue
+<li	v-for="article in articles" @click="getDescribe(article.id)">...</li>
+```
+
+- 方案一
+
+```vue
+getDescribe(id){
+	this.$router.push({
+		path:`/describe/${id}`
+	})
+}
+```
+
+不过需要 对应路由配置如下
+
+```javascript
+{
+    path:'/describe/:id',
+    name:'Describe',
+    component:Describe
+}
+```
+
+
+
+ 很显然，需要在path中添加/:id来对应 $router.push 中path携带的参数。在子组件中可以使用如下方式来获取传递的参数值。 
+
+子组件获取参数
+
+```javascript
+$route.params.id
+```
+
+- 方案二
+
+ 父组件中：通过路由属性中的name来确定匹配的路由，通过params来传递参数 
+
+```javascript
+this.$router.push({
+    name: 'Describe',
+    params: {
+        id: id
+    }
+})
+```
+
+ 对应路由配置: 注意这里不能使用:/id来传递参数了，因为父组件中，已经使用params来携带参数了。 
+
+```javascript
+{
+     path: '/describe',
+     name: 'Describe',
+     component: Describe
+   }
+```
+
+ 子组件中: 这样来获取参数 
+
+```javascript
+$route.params.id
+```
+
+- 方案三
+
+ 父组件：使用path来匹配路由，然后通过query来传递参数，这种情况下 query传递的参数会显示在url后面?id=？ 
+
+```javascript
+this.$router.push({
+    path: '/describe',
+    query: {
+        id: id
+    }
+})
+```
+
+ 对应路由配置： 
+
+```javascript
+{
+     path: '/describe',
+     name: 'Describe',
+     component: Describe
+ }
+```
+
+ 对应子组件: 这样来获取参数 
+
+```javascript
+$route.query.id
+```
+
+第十题、简单介绍下webpack的工作原理
+
+webpack 的运行流程是一个串行的过程，从启动到结束会依次执行一下流程
+
+- 初始化参数：从配置文件和shell 语句中读取与合并参数，得出最终的参数
+- 开始编译：用上一步得到的参数初始化 Compiler 对象，加载所有配置的插件，执行 Compiler 对象的 run 方法开始执行编译
+- 确定入口：根据配置中的 entry 找出所有的入口文件
+- 编译模块：从入口文件开始，调用所有配置的loader 对模块进行 解析编译，再找出该模块依赖的模块，再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理
+- 完成模块编译：在经过上述 步骤使用 loader 解析完所有模块之后，得到了每个模块被解析后的最终内容以及它们之间的依赖关系，
+- 输出资源：根据入口和模块之间的依赖关系，开始打包组装成一个个包含多个模块的chunk,再把每个chunk转换成一个单独的文件加入到输出列表，这不是可以修改输出内容的最后机会
+- 输出完成：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统
+
+## 第十题、Vue 中的 computed 和 watch 的区别在哪里 
+
+- computed：计算属性
+
+计算属性是由data中的已知值，得到的一个新值。
+这个新值只会根据已知值的变化而变化，其他不相关的数据的变化不会影响该新值。
+计算属性不在data中，计算属性新值的相关已知值在data中。
+别人变化影响我自己。
+
+- watch：监听数据的变化
+
+监听data中数据的变化
+监听的数据就是data中的已知值
+我的变化影响别人
+
+1.watch擅长处理的场景：一个数据影响多个数据
+
+2.computed擅长处理的场景：一个数据受多个数据影响
