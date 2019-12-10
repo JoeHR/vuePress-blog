@@ -592,3 +592,175 @@ webpack 的运行流程是一个串行的过程，从启动到结束会依次执
 1.watch擅长处理的场景：一个数据影响多个数据
 
 2.computed擅长处理的场景：一个数据受多个数据影响
+
+
+
+## 第十一题、JS数据类型之问-概念篇
+
+### 1、JS原始数据类型有哪些？引用数据类型有哪些？
+
+在 JS 中，存在着 7中原始值，分别是：
+
+-  boolean
+- null
+- undefined
+- number
+- string
+- symbol
+- bigint
+
+引用数据类型：对象<font color=red>`Object`</font>(包含 普通对象-Object，数组对象-Array，正则对象-RegExp，日期对象-Date，数学函数-Math，函数对象-Function)
+
+
+
+### 2、说出下面运行的结果，解释原因
+
+```javascript
+function test(person) {
+  person.age = 26
+  person = {
+    name: 'hzj',
+    age: 18
+  }
+  return person
+}
+const p1 = {
+  name: 'fyq',
+  age: 19
+}
+const p2 = test(p1)
+console.log(p1) // -> ?
+console.log(p2) // -> ?
+
+```
+
+结果是：
+
+```javascript
+p1:{name: "fyq", age: 26}
+p2:{name: "hzj", age: 18}
+```
+
+> 原因: 在函数传参的时候传递的是对象在堆中的内存地址值，test函数中的实参person是p1对象的内存地址，通过调用person.age = 26确实改变了p1的值，但随后person变成了另一块内存空间的地址，并且在最后将这另外一份内存空间的地址返回，赋给了p2。
+
+### 3、null 是对象吗？为什么？
+
+结论：null  不是 对象
+
+解释：虽然 typeof null 会输出 object，但是这只是 JS 存在的一个悠久 Bug。在 JS 的最初版本中使用的是 32 位系统，为了性能考虑使用低位存储变量的类型信息，000 开头代表是对象然而 null 表示为全零，所以将它错误的判断为 object 。
+
+>  在ECMA6中, 曾经有提案为历史平凡, 将type null的值纠正为null, 但最后提案被拒了. 理由是历史遗留代码太多, 不想得罪人, 不如继续将错就错当和事老  , 参考 [harmony:typeof_null [ES Wiki\]](https://link.zhihu.com/?target=http%3A//wiki.ecmascript.org/doku.php%3Fid%3Dharmony%3atypeof_null) 
+
+### 4、'1'.toString() 为什么可以调用
+
+其实在这个语句运行的过程中做了这样几件事
+
+```javascript
+var s = new Object("1")
+s.toString();
+s = null;
+```
+
+第一步: 创建Object类实例。注意为什么不是String ？ 由于Symbol和BigInt的出现，对它们调用new都会报错，目前ES6规范也不建议用new来创建基本类型的包装类。
+
+第二步: 调用实例方法。
+
+第三步: 执行完方法立即销毁这个实例。
+
+ 整个过程体现了`基本包装类型`的性质，而基本包装类型恰恰属于基本数据类型，包括Boolean, Number和String。 
+
+> 参考:《JavaScript高级程序设计(第三版)》P118 
+
+### 5、0.1+0.2 为什么不等于0.3？
+
+0.1 和 0.2 在转换成 2进制后会无限循环，由于标准位数的限制后面多余的位数会被截掉，此时就已经出现了精度的丢失，相加后因浮点数小数位的限制而截断的二进制数字在转换为十进制就会变成  0.30000000000000004 。
+
+### 6、如何理解 BigInt ?
+
+#### 什么是 BigInt ?
+
+> BigInt 是一种新的数据类型，用于当整数值大于Number 数据类型支持的范围时，这种数据类型允许我们安全的对<font color=red>大整数</font>执行算术操作，表示高分辨率的时间戳，使用大整数id,等等，而不需要使用库。
+
+#### 为什么需要 BigInt ?
+
+在 JS 中，所有的数字都已双精度64位 浮点格式表示，那这会带来什么问题呢？
+
+这导致JS中的Number无法精确表示非常大的整数，它会将非常大的整数四舍五入，确切地说，JS中的Number类型只能安全地表示-9007199254740991(-(2^53-1))和 9007199254740991（(2^53-1)），任何超出此范围的整数值都可能失去精度。
+
+```javas
+console.log(999999999999999999)  // -> 1000000000000000000
+```
+
+ 同时也会有一定的安全性问题: 
+
+```javascript
+9007199254740992 === 9007199254740993	// -> true 
+```
+
+#### 如何创建并使用BigInt？
+
+ 要创建BigInt，只需要在数字末尾追加n即可。 
+
+```javascript
+console.log( 9007199254740995n );    // → 9007199254740995n
+console.log( 9007199254740995 );     // → 9007199254740996
+```
+
+ 另一种创建BigInt的方法是用BigInt()构造函数、 
+
+```javascript
+BigInt("9007199254740995");    // → 9007199254740995n
+```
+
+ 简单使用如下: 
+
+```javascript
+10n + 20n;    // → 30n	
+10n - 20n;    // → -10n	
++10n;         // → TypeError: Cannot convert a BigInt value to a number	
+-10n;         // → -10n	
+10n * 20n;    // → 200n	
+20n / 10n;    // → 2n	
+23n % 10n;    // → 3n	
+10n ** 3n;    // → 1000n	
+
+const x = 10n;	
+++x;          // → 11n	
+--x;          // → 9n
+console.log(typeof x);   //"bigint"
+
+```
+
+#### 值得警惕的点
+
+1. BigInt 不支持一元加号运算符，这可能时某些程序可能依赖于 + 始终生成 Number 的不变量，或者抛出异常。另外，更改 + 的行为也会破坏 asm.js 代码。
+
+2. 因为隐式类型转换可能丢失信息，所以不允许在bigint 和 Number 之间进行混合操作。当混合使用大整数和浮点数时，结果值可能无法有 BigInt 或 Number 精确表示。
+
+   ```javascript
+   10 + 10n		// -> TypeError
+   ```
+
+3. 不能将 BigInt 传递给Web api 和 内置的 JS 函数，这些函数需要一个 Number类型的数字，尝试这样做会报 TypeError 错误。
+
+   ```javascript
+   Math.max(2n,4n,6n)		// -> TypeError
+   ```
+
+4. 当 Boolean 类型与 BigInt 类型相遇时，BigInt 的处理方式与 Number 类似，换句话说，只要不是 0n,BigInt 就被视为 truthy 的值
+
+   ```javascript
+   if(0n){	// 条件判断位 false
+       
+   }
+   
+   if(3n){	// 条件位 true
+       
+   }
+   
+   ```
+
+5. 元素都为 BigInt 的数组可以 进行 sort
+
+6. BigInt 可以正常的进行位运算，如 |、&、<<、和 ^
+
