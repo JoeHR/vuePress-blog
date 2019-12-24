@@ -930,9 +930,9 @@ Service Worker 同时也是 PWA 的重要实现机制，关于它的细节和特
   - 若资源更新，返回资源和200状态码
   - 否则，返回304，告诉浏览器直接从缓存获取资源
 
-# 第十四题、JS数据类型之问--检测篇
+## 第十四题、JS数据类型之问--检测篇
 
-## 1、typpeof 是否能正确判断类型？
+### 1、typpeof 是否能正确判断类型？
 
  对于原始类型来说，除了 null 都可以调用typeof显示正确的类型。 
 
@@ -968,7 +968,7 @@ str2 instanceof String // true
 
 ```
 
-## 2、instanceof能否判断基本数据类型？
+### 2、instanceof能否判断基本数据类型？
 
  能。比如下面这种方式: 
 
@@ -986,7 +986,7 @@ console.log(111 instanceof PrimitiveNumber) // true
 
 其实就是自定义instanceof行为的一种方式，这里将原有的instanceof方法重定义，换成了typeof，因此能够判断基本数据类型。
 
-## 3. 能不能手动实现一下instanceof的功能？
+### 3. 能不能手动实现一下instanceof的功能？
 
  核心: 原型链的向上查找。 
 
@@ -1014,7 +1014,7 @@ console.log(myInstanceof(new String("111"), String));//true
 
 ```
 
-## 4、Object.is和===的区别？
+### 4、Object.is和===的区别？
 
  Object在严格等于的基础上修复了一些特殊情况下的失误，具体来说就是+0和-0，NaN和NaN。 源码如下： 
 
