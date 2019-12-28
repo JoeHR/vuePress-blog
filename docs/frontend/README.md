@@ -462,11 +462,11 @@ Vuex 允许维护中央状态。组件将 Vuex 用作响应性数据存储，并
 
 
 
-## 第九题、vue路由传参的三种基本方式
+## 第九题、vue，react路由传参的三种基本方式
 
  现有如下场景，点击父组件的li元素跳转到子组件中，并携带参数，便于子组件获取数据。 
 
-
+### vue 路由传参的三种方式
 
 父组件中
 
@@ -474,7 +474,7 @@ Vuex 允许维护中央状态。组件将 Vuex 用作响应性数据存储，并
 <li	v-for="article in articles" @click="getDescribe(article.id)">...</li>
 ```
 
-- 方案一
+#### 方案一
 
 ```vue
 getDescribe(id){
@@ -504,7 +504,7 @@ getDescribe(id){
 $route.params.id
 ```
 
-- 方案二
+#### 方案二
 
  父组件中：通过路由属性中的name来确定匹配的路由，通过params来传递参数 
 
@@ -533,7 +533,7 @@ this.$router.push({
 $route.params.id
 ```
 
-- 方案三
+#### 方案三
 
  父组件：使用path来匹配路由，然后通过query来传递参数，这种情况下 query传递的参数会显示在url后面?id=？ 
 
@@ -562,7 +562,173 @@ this.$router.push({
 $route.query.id
 ```
 
-第十题、简单介绍下webpack的工作原理
+### React  Router 页面传值的三种方法
+
+#### 方案一、props.params
+
+>  props.params
+
+```javascript
+import {Router,Route,hashHistory} from 'react-router'
+
+class APP extends React.Component{
+    render(){
+		return (
+        <Router history={hashHistory}>
+            <Route path='/user/:name' component={UserPage}></Route>
+        </Router>
+        )
+    }
+}
+```
+
+上面指定参数 <font color=red>name</font>
+
+使用方法1：link组件传值
+
+```javascript
+import {Link,hashHiStory} from 'react-router'
+
+<Link to="/user/sam">
+
+```
+
+
+
+使用方法2：history 跳转
+
+```javascript
+import {Link,hashHiStory} from 'react-router'
+
+hasHistory.push("/user/sam")
+```
+
+对应获取参数的方法
+
+```react
+this.props.params.name
+```
+
+**上面的方法可以传递一个或多个值，但是每个值的类型都是字符串，没法传递一个对象， 如果传递的话可以将json对象转换为字符串，然后传递过去，传递过去之后再将json字符串转换为对象将数据取出来 **
+
+如：定义路由：
+
+```react
+<Route path='/user/:data' component={UserPage}>
+```
+
+使用：
+
+```react
+var data={id:3,name:sam,age:36}
+data = JSON.stringify(data)
+var path = `/user/${data}`
+```
+
+```react
+<Link to={path}>用户</Link>
+```
+
+```react
+hasHistory.push(path)
+```
+
+获取数据：
+
+```react
+var data = JSON.parse(this.props.params.data)
+var {id,name,age} = data
+```
+
+#### 方案2、query
+
+ query方式使用很简单，类似于表单中的get方法，传递参数为明文： 
+
+路由定义
+
+```react
+<Route path='/user' component={UserPage}></Route>
+```
+
+使用：
+
+```react
+var data={id:3,name:sam,age:36}
+var path = {pathname:'/user',query:data}
+
+// Link
+<Link to={path}>用户</Link>
+
+// hasHistory
+hasHistory.push(path)
+```
+
+获取数据：
+
+```react
+var data = this.props.location.query
+var {id,name,age} = data
+```
+
+#### 方案三、state
+
+ state方式类似于post方式，使用方式和query类似， 
+
+路由定义：
+
+```react
+<Route path='/user' component={UserPage}></Route>
+```
+
+使用：
+
+```react
+var data = {id:3,name:same,age:36}
+var path = {pathname:'/user',state:data}
+
+// Link
+<Link to={path}>用户</Link>
+
+// hasHistory
+hashHistory.push(path)
+```
+
+获取：
+
+```react
+var data = this.props.location.state;
+var {id,name,age} = data;
+```
+
+ state方式依然可以传递任意类型的数据，而且可以不以明文方式传输。 
+
+ 可以在实现后对比地址栏的URL来观察三种传值方式URL的区别 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 第十题、简单介绍下webpack的工作原理
 
 webpack 的运行流程是一个串行的过程，从启动到结束会依次执行一下流程
 
@@ -574,7 +740,7 @@ webpack 的运行流程是一个串行的过程，从启动到结束会依次执
 - 输出资源：根据入口和模块之间的依赖关系，开始打包组装成一个个包含多个模块的chunk,再把每个chunk转换成一个单独的文件加入到输出列表，这不是可以修改输出内容的最后机会
 - 输出完成：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统
 
-## 第十题、Vue 中的 computed 和 watch 的区别在哪里 
+## 第十一题、Vue 中的 computed 和 watch 的区别在哪里 
 
 - computed：计算属性
 
@@ -593,7 +759,7 @@ webpack 的运行流程是一个串行的过程，从启动到结束会依次执
 
 2.computed擅长处理的场景：一个数据受多个数据影响
 
-## 第十一题、script标签中defer和async的区别是什么？
+## 第十二题、script标签中defer和async的区别是什么？
 
 默认情况下，脚本的下载和执行将会按照文档的先后顺序同步进行。当脚本下载和执行的时候，文档解析就会被阻塞，在脚本下载和执行完成之后文档才能往下继续进行解析。
 
@@ -605,7 +771,7 @@ webpack 的运行流程是一个串行的过程，从启动到结束会依次执
 
 
 
-## 第十二题、JS数据类型之问-概念篇
+## 第十三题、JS数据类型之问-概念篇
 
 ### 1、JS原始数据类型有哪些？引用数据类型有哪些？
 
@@ -774,7 +940,7 @@ console.log(typeof x);   //"bigint"
 
 6. BigInt 可以正常的进行位运算，如 |、&、<<、和 ^
 
-## 第十三题、能不能说一说浏览器缓存
+## 第十四题、能不能说一说浏览器缓存
 
 缓存是性能优化中非常重要的一环，浏览器的缓存机制对开发也是非常重要的知识点。接下来以三个部分来把浏览器的缓存机制说清楚： 
 
@@ -930,7 +1096,7 @@ Service Worker 同时也是 PWA 的重要实现机制，关于它的细节和特
   - 若资源更新，返回资源和200状态码
   - 否则，返回304，告诉浏览器直接从缓存获取资源
 
-## 第十四题、JS数据类型之问--检测篇
+## 第十五题、JS数据类型之问--检测篇
 
 ### 1、typpeof 是否能正确判断类型？
 
