@@ -1198,3 +1198,65 @@ function is(x, y) {
  
 ```
 
+
+
+## 第十六题：var 为什么会被let 取代
+
+先看 用到 var 的一段代码
+
+```javascript
+function doSomething () {
+    for (var i = 0; i < 5; i++) {
+        console.log(i)
+    }
+    console.log('Finally ' + i)
+}
+
+doSomething()
+```
+
+ 打印结果： 
+
+```javascript
+0
+1
+2
+3
+4
+Finally 5
+```
+
+ i 在 for 语句里定义的，为什么在 for 语句外面仍然打印出来值了呢？？ 
+
+ 再看用到 let 的一段代码。 
+
+```javascript
+function doSomething () {
+    for (let i = 0; i < 5; i++) {
+        console.log(i)
+    }
+    console.log('Finally ' + i)
+}
+
+doSomething()
+```
+
+ 打印结果如下： 
+
+```javascript
+0
+1
+2
+3
+4
+Uncaught ReferenceError: i is not defined
+    at doSomething (<anonymous>:5:30)
+    at <anonymous>:8:1
+```
+
+ let 定义的变量 i 符合我们的常识，i 的作用域只在 for 语句里，在 for 外部用 i 变量报错未定义。 
+
+结论：
+
+-  let 和 const 定义变量的作用域都是 **离变量最近的那个块** 内； 
+- var 定义变量的作用域是 **离变量最近的那个方法** 内。上面，用 var 定义的 i 变量的作用域为离 i 最近的方法内，即 i 的作用域在 doSomething 内，所以在 for 语句外也能打印出 i 的值。
