@@ -1198,9 +1198,121 @@ function is(x, y) {
  
 ```
 
+## 第十六题、JS数据类型之问--转换篇
+
+### 1、[] == ![] 结果是什么？为什么？
+
+> 解析
+
+== 中，左右两边都需要转换为数字然后进行比较。
+
+[] 转换为数字为 0
+
+![] 首先是转换为布尔值，由于 [] 作为一个引用类型转换为布尔值为 true
+
+因此 **![]** 为 false， 进而再转换为数字，变为 0
+
+0==0，结果为 true
 
 
-## 第十六题：var 为什么会被let 取代
+
+### 2、js 中类型转换有哪几种？
+
+JS 中，类型转换只有三种
+
+- 转换成数字
+- 转换成布尔值
+- 转换成字符串
+
+转换具体规则如下：
+
+>  注意"Boolean 转字符串"这行结果指的是 true 转字符串的例子 
+
+| **原始值**            | **转换目标** | **结果**                                           |
+| --------------------- | ------------ | -------------------------------------------------- |
+| number                | 布尔值       | 除了0、-0、NaN 外都为 true                         |
+| string                | 布尔值       | 除了空字符串都为true                               |
+| undefined、null       | 布尔值       | False                                              |
+| 引用类型              | 布尔值       | true                                               |
+| number                | 字符串       | 5 => '5'                                           |
+| Boolean、函数、Symbol | 字符串       | ‘true’                                             |
+| 数组                  | 字符串       | [1,2] => '1,2'                                     |
+| 对象                  | 字符串       | ‘[object Object]’                                  |
+| string                | 数字         | ‘1’ => 1, 'a' => NaN                               |
+| 数组                  | 数字         | 空数组为0，存在一个元素且为数字转数字，其他情况NaN |
+| null                  | 数字         | 0                                                  |
+| undefined             | 数字         | NaN                                                |
+| 除了数组的引用类型    | 数字         | NaN                                                |
+| Symbol                | 数字         | 抛错                                               |
+
+### 3、== 和 === 有什么区别？
+
+> === 叫做严格相等，是指：左右两边不仅值要相等，类型也要相等，例如 ‘1’===1 的结果为 false,因为一边为 string,另一边为 number
+
+ ==不像===那样严格，对于一般情况，只要值相等，就返回true，但==还涉及一些类型转换，它的转换规则如下： 
+
+-  两边的类型是否相同，相同的话就比较值的大小，例如1==2，返回false 
+-  判断的是否是null和undefined，是的话就返回true 
+-  判断的类型是否是String和Number，是的话，把String类型转换成Number，再进行比较 
+-  判断其中一方是否是Boolean，是的话就把Boolean转换成Number，再进行比较 
+-  如果其中一方为Object，且另一方为String、Number或者Symbol，会将Object转换成字符串，再进行比较 
+
+```javascript
+
+console.log({a:1}==true)			// false
+console.log({a:1}=="[object Object]")		// true
+```
+
+
+
+### 4、对象转原始类型是根据什么流程运行的
+
+对象转原始类型，会调用内置的[ToPrimitive]函数，对于该函数而言，其逻辑如下：
+
+1、如果Symbol.toPtimitive() 方法，优先调用再返回
+
+2、调用valueOf(), 如果转换为原始类型，则返回
+
+3、调用toString()，如果转换为原始类型，则返回
+
+4、如果都没有返回原始类型，会报错
+
+```javascript
+var obj = {
+    value:3,
+    valueOf(){
+        return 4;
+    },
+    toString(){
+        return '5'
+    }
+    [Symbol.toPrimitive](){
+        return 6
+    }
+}
+
+console.log(obj+1);				// 输出 7
+```
+
+### 5、如何让 if(a==1&&a==2) 条件成立
+
+其实就是上一个问题的应用
+
+```javascript
+var a = {
+    value:0,
+    valueOf:function(){
+        this.value++;
+        return this.value
+    }
+}
+
+console.log(a==1&&a==2);		// true
+```
+
+
+
+## 第十七题：var 为什么会被let 取代
 
 先看 用到 var 的一段代码
 

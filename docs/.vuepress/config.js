@@ -43,6 +43,7 @@ module.exports = {
           children: [
             "",
             ['js01', '语音合成'],
+            ['js02', 'JS循环优化'],
             ['rollup01', 'rollupJs 打包工具'],
             ['performance', 'performance性能调试工具'],
             ['npm', '用npm打造超溜的前端工作流'],
