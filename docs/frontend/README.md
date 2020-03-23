@@ -1554,7 +1554,7 @@ for(let i=1;i<=5;i++){
 
  let使JS发生革命性的变化，让JS有函数作用域变为了块级作用域，用let后作用域链不复存在。代码的作用域以块级为单位，以上面代码为例: 
 
-```java
+```javascript
 // i = 1
 {
   setTimeout(function timer(){

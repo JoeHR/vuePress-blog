@@ -287,3 +287,25 @@ img {
 // vertical-align css的属性vertical-align用来指定行内元素（inline）或表格单元格（table-cell）元素的垂直对齐方式。只对行内元素、表格单元格元素生效，不能用它垂直对齐块级元素
 // vertical-align：baseline/top/middle/bottom/sub/text-top;
 ```
+
+## 19、css 实现自定义虚线边框
+
+```
+div {
+    padding: 1em;
+    border: 1px dashed transparent;
+    background: linear-gradient(white,white) padding-box,
+    repeating-linear-gradient(-45deg,#ccc 0, #ccc 0.25em,white 0,white 0.75em);
+}
+
+
+div {
+    padding-top: 1px;
+    border-top: 1px dashed transparent;
+    background: linear-gradient(transparent,transparent) padding-box,
+    repeating-linear-gradient(-45deg,#ccc 0, #ccc 0.25em,transparent 0,transparent 0.75em);
+    box-sizing: border-box;
+}
+
+```
+
