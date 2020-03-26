@@ -82,6 +82,28 @@
     -moz-text-align-last: justify;
     -webkit-text-align-last: justify;
 }
+
+// 兼容 mac safari 浏览器
+<div id="box2">
+    <p>用 户 名</p>
+    <p>密 码</p>
+</div>
+<style>
+box2 p{
+    width:200px;
+    height:32px;
+    text-align:justify;
+    text-justify:distribute-all-lines;
+}
+
+box2 p:after{
+    display:inline-block;
+    content:'';
+    width:100%;
+    height:0;
+}
+</style>
+
 ```
 
 ### 4、文字竖向排版
