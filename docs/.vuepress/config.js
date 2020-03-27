@@ -41,14 +41,14 @@ module.exports = {
           title: 'javascript',
           collapsable: false,
           children: [
-            "",
             ['js01', '语音合成'],
             ['js02', 'JS循环优化'],
             ['js03', 'JS前端手写源码'],
             ['rollup01', 'rollupJs 打包工具'],
             ['performance', 'performance性能调试工具'],
             ['npm', '用npm打造超溜的前端工作流'],
-            ['mui', 'muiJS']
+            ['mui', 'muiJS'],
+            "",
           ]
         },
         {
@@ -65,6 +65,7 @@ module.exports = {
           collapsable: false,
           children: [
             ["vue01", "vue源码学习笔记01"]
+            ["vue02", "vue 函数节流和防抖"]
           ]
         },
       ],
