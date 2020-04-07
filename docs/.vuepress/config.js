@@ -90,6 +90,6 @@ module.exports = {
     }
   },
   markdown: {
-    lineNumbers: true
+    // lineNumbers: true
   }
 }
