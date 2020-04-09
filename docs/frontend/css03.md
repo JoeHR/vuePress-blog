@@ -736,3 +736,215 @@ and (min-device-width : 320px) and (max-device-width : 480px) {
 ::-webkit-selection { background: #e2eae2; }
 ```
 
+## css3渐变模板
+
+html
+
+```html
+<div class="color-temp"></div>
+```
+
+公共css
+
+```css
+.color-temp{
+    margin:auto;
+    width:300px;
+    height:300px;
+}
+```
+
+线性渐变：`linear-gradient` 
+
+- `0deg` 或者 `bottom`
+
+```css
+.color-temp{
+    background: #629721;
+    background-image: -webkit-linear-gradient(bottom, #c37514, #629721);
+    background-image: -moz-linear-gradient(bottom, #c37514, #629721);
+    background-image: -ms-linear-gradient(bottom, #c37514, #629721);
+    background-image: -o-linear-gradient(bottom, #c37514, #629721);
+    background-image: linear-gradient(bottom, #c37514, #629721);
+}
+
+.color-temp{
+    background: #629721;
+    background-image: -webkit-linear-gradient(0deg, #c37514, #629721);
+    background-image: -moz-linear-gradient(0deg, #c37514, #629721);
+    background-image: -ms-linear-gradient(0deg, #c37514, #629721);
+    background-image: -o-linear-gradient(0deg, #c37514, #629721);
+    background-image: linear-gradient(0deg, #c37514, #629721);
+}
+```
+
+![1586428770569](../.vuepress/public/img/1586428770569.png)
+
+- `90deg` 和`left`
+
+```css
+.color-temp{
+    background: #629721;
+    background-image: -webkit-linear-gradient(left, #c37514, #629721);
+    background-image: -moz-linear-gradient(left, #c37514, #629721);
+    background-image: -ms-linear-gradient(left, #c37514, #629721);
+    background-image: -o-linear-gradient(left, #c37514, #629721);
+    background-image: linear-gradient(left, #c37514, #629721);
+}
+
+.color-temp{
+    background: #629721;
+    background-image: -webkit-linear-gradient(90deg, #c37514, #629721);
+    background-image: -moz-linear-gradient(90deg, #c37514, #629721);
+    background-image: -ms-linear-gradient(90deg, #c37514, #629721);
+    background-image: -o-linear-gradient(90deg, #c37514, #629721);
+    background-image: linear-gradient(90deg, #c37514, #629721);
+}
+```
+
+![1586428838807](../.vuepress/public/img/1586428838807.png)
+
+- `180deg` 和`top`
+
+```css
+.color-temp{
+    background: #629721;
+    background-image: -webkit-linear-gradient(top, #c37514, #629721);
+    background-image: -moz-linear-gradient(top, #c37514, #629721);
+    background-image: -ms-linear-gradient(top, #c37514, #629721);
+    background-image: -o-linear-gradient(top, #c37514, #629721);
+    background-image: linear-gradient(top, #c37514, #629721);
+}
+
+.color-temp{
+    background: #629721;
+    background-image: -webkit-linear-gradient(180deg, #c37514, #629721);
+    background-image: -moz-linear-gradient(180deg, #c37514, #629721);
+    background-image: -ms-linear-gradient(180deg, #c37514, #629721);
+    background-image: -o-linear-gradient(180deg, #c37514, #629721);
+    background-image: linear-gradient(180deg, #c37514, #629721);
+}
+```
+
+![1586428946695](../.vuepress/public/img/1586428946695.png)
+
+- `270deg` 和`right`
+
+```css
+.color-temp{
+    background: #629721;
+    background-image: -webkit-linear-gradient(right, #c37514, #629721);
+    background-image: -moz-linear-gradient(right, #c37514, #629721);
+    background-image: -ms-linear-gradient(right, #c37514, #629721);
+    background-image: -o-linear-gradient(right, #c37514, #629721);
+    background-image: linear-gradient(right, #c37514, #629721);
+}
+
+.color-temp{
+    background: #629721;
+    background-image: -webkit-linear-gradient(270deg, #c37514, #629721);
+    background-image: -moz-linear-gradient(270deg, #c37514, #629721);
+    background-image: -ms-linear-gradient(270deg, #c37514, #629721);
+    background-image: -o-linear-gradient(270deg, #c37514, #629721);
+    background-image: linear-gradient(270deg, #c37514, #629721);
+}
+```
+
+![1586429037987](../.vuepress/public/img/1586429037987.png)
+
+- 45deg(渐变轴为45度，从蓝色渐变到红色 )
+
+```css
+background: linear-gradient(45deg, blue, red);
+```
+
+![1586429171844](../.vuepress/public/img/1586429171844.png)
+
+- to left top(从右下到左上、从蓝色渐变到红色)
+
+```css
+background: linear-gradient(to left top, blue, red);
+```
+
+![1586429369808](../.vuepress/public/img/1586429369808.png)
+
+- 从下到上，从蓝色开始渐变、到高度40%位置是绿色渐变开始、最后以红色结束
+
+```
+background: linear-gradient(0deg, blue, green 40%, red);
+```
+
+![1586429435680](../.vuepress/public/img/1586429435680.png)
+
+- turn( 表示圈 一个完整的园 是 `1turn`)
+
+```css
+background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);	// 表示 四分之一个圆，90deg/ to left	从左到右 渐变
+
+
+/* 类似的单位 还有 */
+
+// deg : 度。一个完整的圆是 360deg。例：0deg，90deg，14.23deg
+// grad	: 百分度。一个完整的圆是 400grad。例：0grad，100grad，38.8grad。
+// rad	: 弧度。一个完整的圆是 2π 弧度，约等于 6.2832rad。1rad 是 180/π 度。例：0rad，1.0708rad，6.2832rad。
+// turn : 圈数。一个完整的圆是 1turn。例：0turn，0.25turn，1.2turn。
+
+```
+
+![1586429813794](../.vuepress/public/img/1586429813794.png)
+
+````css
+background: linear-gradient(to left, #333, #333 50%, #eee 75%, #333 75%);
+````
+
+![1586430076087](../.vuepress/public/img/1586430076087.png)
+
+```css
+background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%),
+            linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%),
+            linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%);
+```
+
+![1586430096640](../.vuepress/public/img/1586430096640.png)
+
+- 斑马线
+
+```css
+  background:linear-gradient(90deg,#000 50%,transparent 50%,transparent);  
+  background-size:10% 100%;
+```
+
+![1586430359947](../.vuepress/public/img/1586430359947.png)
+
+- 棋盘
+
+```css
+background-image: linear-gradient(45deg, #E1DEB0 25%, transparent 25%, transparent 75%, #E1DEB0 75%, #E1DEB0), 
+    linear-gradient(45deg, #E1DEB0 26%, transparent 26%, transparent 74%, #E1DEB0 74%, #E1DEB0);
+    background-image: -webkit-linear-gradient(45deg, #E1DEB0 25%, transparent 25%, transparent 75%, #E1DEB0 75%, #E1DEB0), 
+    -webkit-linear-gradient(45deg, #E1DEB0 26%, transparent 26%, transparent 74%, #E1DEB0 74%, #E1DEB0);
+	background-image: -moz-linear-gradient(45deg, #E1DEB0 24%, transparent 24%, transparent 76%, #E1DEB0 76%, #E1DEB0), 
+    -moz-linear-gradient(45deg, #E1DEB0 26%, transparent 26%, transparent 74%, #E1DEB0 74%, #E1DEB0);
+    background-image: -o-linear-gradient(45deg, #E1DEB0 25%, transparent 25%, transparent 75%, #E1DEB0 75%, #E1DEB0), 
+    -o-linear-gradient(45deg, #E1DEB0 25%, transparent 25%, transparent 75%, #E1DEB0 75%, #E1DEB0);
+    background-size: 100px 100px;
+    background-position: 0 0, 50px 50px;
+```
+
+![1586430439860](../.vuepress/public/img/1586430439860.png)
+
+- 格子
+
+```css
+background-image:-webkit-linear-gradient(0deg,#E1DEB0 50%,transparent 50%,transparent),
+  -webkit-linear-gradient(90deg,#E1DEB0 50%,transparent 50%,transparent);
+  background-image:-moz-linear-gradient(0deg,#E1DEB0 50%,transparent 50%,transparent),
+  -moz-linear-gradient(90deg,#E1DEB0 50%,transparent 50%,transparent);
+  background-image:-o-linear-gradient(0deg,#E1DEB0 50%,transparent 50%,transparent),
+  -o-linear-gradient(90deg,#E1DEB0 50%,transparent 50%,transparent);
+  background-image:linear-gradient(0deg,#E1DEB0 50%,transparent 50%,transparent),
+  linear-gradient(90deg,#E1DEB0 50%,transparent 50%,transparent);
+  background-size:100px 100px;
+```
+
+![1586430495815](../.vuepress/public/img/1586430495815.png)
