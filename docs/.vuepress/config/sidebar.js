@@ -38,6 +38,7 @@ module.exports = {
         children: [
           ['vue01', 'vue源码学习笔记01'],
           ['vue02', 'vue 函数节流和防抖'],
+          ["vue03","vue 使用得一些小技巧"]
         ],
       },
     ],
