@@ -948,3 +948,315 @@ background-image:-webkit-linear-gradient(0deg,#E1DEB0 50%,transparent 50%,transp
 ```
 
 ![1586430495815](../.vuepress/public/img/1586430495815.png)
+
+## css 斑马线
+
+```html
+<div class="wrap">
+	<div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+</div>
+
+<style>
+    .wrap{
+        width:500px;
+        height:100px;
+    }
+    .item{
+        width:100%;
+        height:20px;
+    }
+    .item:nth-child(odd){
+    	background:#000;
+    }
+</style>
+```
+
+![1586482979187](../.vuepress/public/img/1586482979187.png)
+
+·
+
+## 盒子阴影 box-shadow
+
+- 内阴影
+
+```css
+.inner-shadow {
+    -moz-box-shadow: inset 0px 0 40px #000;
+    -webkit-box-shadow: inset 0px 0 40px #000;
+    box-shadow: inset 0px 0 40px #000;
+}
+```
+
+![1586483541678](../.vuepress/public/img/1586483541678.png)
+
+- 外阴影
+
+```css
+ .out-shadow {
+     -webkit-box-shadow: 0 0px 0px 40px rgba(0, 0, 0, 0.52);
+     -moz-box-shadow: 0 0px 0px 40px rgba(0, 0, 0, 0.52);
+     box-shadow: 0 0px 0px 40px rgba(0, 0, 0, 0.52);
+}
+```
+
+![1586483579653](../.vuepress/public/img/1586483579653.png)
+
+box-shadow: none | <shadow>  [, <shadow>] *
+
+box-shadow 的属性值是由 以逗号分隔得`shadow`列表来描述一个 或多个 阴影效果。
+
+每个 shadow 为 下面这些值得 组合
+
+- inset 关键字，可设可不设，inset 代表阴影是向内得，不设代表阴影是向外的
+- 第一个长度 `offset-x`  代表阴影 x 轴向得 偏移，正值向右，负值向左
+- 第二个长度 `offset-y` 代表隐形 y 轴向得 偏移，正值向下，负值向上
+- 第三个长度` blur-radius`代表阴影模糊半径，不允许负值
+- 第四个长度 `spread-radius` 代表阴影扩展半径，正值放大，负值缩小。
+- color 代表投影得颜色
+
+## 三角形列表项目符号
+
+```css
+ ul {
+     margin: 0.75em 0;
+     padding: 0 1em;
+     list-style: none;
+}
+
+li:before {
+    content: "";
+    border-color: transparent #111;
+    border-style: solid;
+    border-width: 0.35em 0 0.35em 0.45em;
+    display: block;
+    height: 0;
+    width: 0;
+    left: -1em;
+    top: 0.9em;
+    position: relative;
+}
+```
+
+![1586485831508](../.vuepress/public/img/1586485831508.png)
+
+## 强制换行
+
+```css
+pre{
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+```
+
+##  css3对话气泡
+
+```html
+ <div class="chat-bubble">
+     <div class="chat-bubble-arrow-border"></div>
+     <div class="chat-bubble-arrow"></div>
+</div>
+
+<style>
+    .chat-bubble {
+        width: 300px;
+        height: 100px;
+        background-color: #ededed;
+        border: 2px solid #666;
+        font-size: 35px;
+        line-height: 1.3em;
+        margin: 10px auto;
+        padding: 10px;
+        position: relative;
+        text-align: center;
+        width: 300px;
+        -moz-border-radius: 20px;
+        -webkit-border-radius: 20px;
+        -moz-box-shadow: 0 0 5px #888;
+        -webkit-box-shadow: 0 0 5px #888;
+        font-family: 'Bangers', arial, serif;
+    }
+
+    .chat-bubble-arrow-border {
+        border-color: #666 transparent transparent transparent;
+        border-style: solid;
+        border-width: 20px;
+        height: 0;
+        width: 0;
+        position: absolute;
+        bottom: -42px;
+        left: 30px;
+    }
+
+    .chat-bubble-arrow {
+        border-color: #ededed transparent transparent transparent;
+        border-style: solid;
+        border-width: 20px;
+        height: 0;
+        width: 0;
+        position: absolute;
+        bottom: -39px;
+        left: 30px;
+    }
+</style>
+```
+
+![1586485809837](../.vuepress/public/img/1586485809837.png)
+
+## css3 [data-*] 悬浮提示文本
+
+```html
+<div data-tooltip="这是一段文字，不要问我为什么,我也不知道">这是一段文字，不要问我为什么,我也不知道</div>
+
+<style>
+	 div {
+            color: #666;
+            display: inline-block;
+            position: relative;
+            margin: auto;
+        }
+
+        div[data-tooltip]:after{
+            content:"";
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% - 10px);
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            white-space: pre;
+            border-width: 8px;
+            border-style: solid;
+            border-color: rgba(0,0,0,.85) transparent  transparent transparent;
+            display: none;
+        }
+
+        div[data-tooltip]:before{
+            content:attr(data-tooltip);     /*可直接获取 data- 属性*/
+            position: absolute;
+            background: rgba(0,0,0,.85);
+            color: #fff;
+            left: 0;
+            bottom: 120%;
+            line-height: 32px;
+            white-space: nowrap;
+            border-radius: 5px;
+            display: none;
+        }
+
+        div[data-tooltip]:hover:after{
+            display: block;
+        }
+        div[data-tooltip]:hover:before{
+            display: block;
+        }
+</style>
+```
+
+
+
+![1586490179206](../.vuepress/public/img/1586490179206.png)
+
+## 在可打印得网页中显示 URLs
+
+```css
+@media print   {  
+  a:after {  
+    content: " [" attr(href) "] ";  
+  }  
+}
+```
+
+## 禁用移动webkit得选择高亮
+
+```css
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+```
+
+## css3 圆点图案
+
+```css
+body{
+    background: radial-gradient(circle, white 10%, transparent 10%), radial-gradient(circle, white 10%, black 10%) 50px 50px;
+    background-size: 100px 100px;
+}
+```
+
+## 论文页面得卷曲效果
+
+```css
+ ul.box {
+            position: relative;
+            z-index: 1;
+            /* prevent shadows falling behind containers with backgrounds */
+            overflow: hidden;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul.box li {
+            position: relative;
+            float: left;
+            width: 250px;
+            height: 150px;
+            padding: 0;
+            border: 1px solid #efefef;
+            margin: 0 30px 30px 0;
+            background: #fff;
+            -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+            -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+        }
+
+        ul.box li:before,
+        ul.box li:after {
+            content: '';
+            z-index: -1;
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            width: 70%;
+            max-width: 300px;
+            /* avoid rotation causing ugly appearance at large container widths */
+            max-height: 100px;
+            height: 55%;
+            -webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            -moz-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            -webkit-transform: skew(-15deg) rotate(-6deg);
+            -moz-transform: skew(-15deg) rotate(-6deg);
+            -ms-transform: skew(-15deg) rotate(-6deg);
+            -o-transform: skew(-15deg) rotate(-6deg);
+            transform: skew(-15deg) rotate(-6deg);
+        }
+
+        ul.box li:after {
+            left: auto;
+            right: 10px;
+            -webkit-transform: skew(15deg) rotate(6deg);
+            -moz-transform: skew(15deg) rotate(6deg);
+            -ms-transform: skew(15deg) rotate(6deg);
+            -o-transform: skew(15deg) rotate(6deg);
+            transform: skew(15deg) rotate(6deg);
+        }
+```
+
+![1586490984306](../.vuepress/public/img/1586490984306.png)
