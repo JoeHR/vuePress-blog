@@ -1,6 +1,6 @@
 ### 伪元素实现气泡对话框
 
-```
+```html
 .logo-pp {
     display: inline-block;
     width: 150px;
@@ -32,7 +32,7 @@
 
 ### 文本溢出 省略号
 
-```
+```css
 // 单行文本溢出
 .oneline{
   overflow:hidden;
@@ -53,7 +53,7 @@
 
 ### 2、不换行、自动换行、强制换行
 
-```
+```css
 //不换行
 .wrap {
   white-space:nowrap;
@@ -74,7 +74,7 @@
 
 ### 3、文本两端对齐
 
-```
+```html
 .textJustify{
     text-align: justify;
     text-justify: distribute-all-lines;  //ie6-8
@@ -83,7 +83,7 @@
     -webkit-text-align-last: justify;
 }
 
-// 兼容 mac safari 浏览器
+<!-- 兼容 mac safari 浏览器 --> 
 <div id="box2">
     <p>用 户 名</p>
     <p>密 码</p>
@@ -108,7 +108,7 @@ box2 p:after{
 
 ### 4、文字竖向排版
 
-```
+```css
 
 // 单列展示时
 .wrap {
@@ -135,7 +135,7 @@ box2 p:after{
 
 ### 5、禁用鼠标事件
 
-```
+```css
 .selector{
     pointer-events: none;
 }
@@ -143,7 +143,7 @@ box2 p:after{
 
 ### 6、禁止用户选择
 
-```
+```css
 .wrap {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -156,7 +156,7 @@ box2 p:after{
 
 ### 7、图片宽度自适应
 
-```
+```css
 img{
   max-width:100%;
 }
@@ -164,7 +164,7 @@ img{
 
 ### 8、字母大小写/首字母大写/
 
-```
+```css
 .wrap{
   text-transform: uppercase;  // 将所有的字母转为大写字母
 }
@@ -184,7 +184,7 @@ img{
 
 ### 9、容器设为透明
 
-```
+```css
 .wrap{
   background:transparent;
 }
@@ -200,7 +200,7 @@ img{
 
 ### 10、消除 transition 闪屏
 
-```
+```css
 .wrap{
     -webkit-transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
@@ -210,7 +210,7 @@ img{
 
 ### 11、自定义滚动条（只在谷歌中生效）
 
-```
+```css
 overflow-y: scroll;
 整个滚动条
 ::-webkit-scrollbar {
@@ -233,7 +233,7 @@ overflow-y: scroll;
 
 ### 12、让 HTML 识别 string 里的 '\n' 并换行
 
-```
+```css
 body {
   	white-space: pre-line;
 }
@@ -241,7 +241,7 @@ body {
 
 ### 13、移除被点链接的边框
 
-```
+```css
 a {outline: none}
 a {outline: 0}
 
@@ -249,13 +249,13 @@ a {outline: 0}
 
 ### 14、使用 CSS 显示链接之后的 URL
 
-```
+```css
 a:after{content:" (" attr(href) ") ";}
 ```
 
 ### 15、select 内容居中显示、下拉内容右对齐
 
-```
+```css
 select{
     text-align: center;
     text-align-last: center;
@@ -268,7 +268,7 @@ select option {
 
 ### 16、修改 input 输入框中光标的颜色不改变字体的颜色
 
-```
+```css
 input{
     color:  #fff;
     caret-color: red;
@@ -277,7 +277,7 @@ input{
 
 ### 17、修改 input 输入框中 placeholder 默认字体样式
 
-```
+```css
 //webkit内核的浏览器
 input::-webkit-input-placeholder {
     color: #c2c6ce;
@@ -298,7 +298,7 @@ input:-ms-input-placeholder {
 
 ### 18、让 div 里的图片和文字同时上下居中
 
-```
+```css
 .wrap {
   height: 100,
   line-height: 100
@@ -312,7 +312,7 @@ img {
 
 ## 19、css 实现自定义虚线边框
 
-```
+```css
 div {
     padding: 1em;
     border: 1px dashed transparent;
