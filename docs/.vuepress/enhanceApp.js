@@ -54,11 +54,11 @@ export default ({
   siteData  // 站点元素据
 }) => {
   Vue.use(ElementUI)
-  try {
-    // 生成静态页时在node中执行，没有document对象
-    document && integrateGitment(router)
-  } catch (e) {
-    console.error(e.message)
-  }
+  // try {
+  //   // 生成静态页时在node中执行，没有document对象
+  //   document && integrateGitment(router)
+  // } catch (e) {
+  //   console.error(e.message)
+  // }
   // ...做一些其他的应用级别的优化
 }

@@ -12,9 +12,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@vssue/api-github-v3": "^1.4.3",
+    "@vssue/vuepress-plugin-vssue": "^1.4.3",
     "element-ui": "^2.12.0"
   },
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^1.2.0"
+    "@vuepress/plugin-back-to-top": "^1.2.0",
+    "@vuepress/plugin-nprogress": "^1.4.0"
   }
 }
