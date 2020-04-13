@@ -12,7 +12,7 @@
 
 ![image-20200413225640550](../.vuepress/public/img/linux/redis-03.png)
 
-:::warning:
+:::warning
 
 如果没有频道被指定，也即是，一个无参数的 UNSUBSCRIBE 调用被执行，那么客户端使用 [SUBSCRIBE](http://doc.redisfans.com/pub_sub/subscribe.html#subscribe) 命令订阅的所有频道都会被退订。在这种情况下，命令会返回一个信息，告知客户端所有被退订的频道。
 
