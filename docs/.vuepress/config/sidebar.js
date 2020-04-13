@@ -49,7 +49,10 @@ module.exports = {
     'linux03',
     'docker01',
     'mongodb01',
-    'mongoose'
+    'mongoose',
+    ['redis', 'redis相关笔记1'],
+    ['redis01', 'redis相关笔记2'],
+    ['redis02', 'redis相关笔记3']
   ],
   '/other/': ['', 'gitment'],
   '/node': [''],
