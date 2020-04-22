@@ -3,8 +3,8 @@ module.exports = {
     {
       title: '测试',
       collapsable: false,
-      children: ['']
-    }
+      children: [''],
+    },
   ],
   '/frontend/': [
     {
@@ -20,8 +20,9 @@ module.exports = {
         ['performance', 'performance性能调试工具'],
         ['npm', '用npm打造超溜的前端工作流'],
         ['mui', 'muiJS'],
-        'dailyquestion'
-      ]
+        'dailyquestion',
+        'eslint',
+      ],
     },
     {
       title: 'css',
@@ -29,8 +30,8 @@ module.exports = {
       children: [
         ['css01', 'css大法'],
         ['css02', 'css小技巧'],
-        ['css03', 'css冷门技巧']
-      ]
+        ['css03', 'css冷门技巧'],
+      ],
     },
     {
       title: 'Vue学习',
@@ -38,9 +39,9 @@ module.exports = {
       children: [
         ['vue01', 'vue源码学习笔记01'],
         ['vue02', 'vue 函数节流和防抖'],
-        ['vue03', 'vue 使用得一些小技巧']
-      ]
-    }
+        ['vue03', 'vue 使用得一些小技巧'],
+      ],
+    },
   ],
   '/linux/': [
     '',
@@ -52,9 +53,9 @@ module.exports = {
     'mongoose',
     ['redis', 'redis笔记1'],
     ['redis01', 'redis笔记2'],
-    ['redis02', 'redis笔记3']
+    ['redis02', 'redis笔记3'],
   ],
   '/other/': ['', 'gitment'],
   '/node': [''],
-  '/python': ['']
-};
+  '/python': [''],
+}
