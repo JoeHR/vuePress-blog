@@ -495,7 +495,238 @@ export default {
 </script>
 ```
 
+##  监听组件生命周期
 
+ 通常我们监听组件生命周期会使用 `$emit` ，父组件接收事件来进行通知 
+
+子组件
+
+```vue
+<script>
+    export default{
+        mounted(){
+            this.$emit('listenMounted')
+        }
+    }
+</script>
+```
+
+父组件
+
+```vue
+<template>
+	<div>
+        <List @listenMounted="listenMounted" />
+    </div>
+</template>
+```
+
+ 其实还有一种简洁的方法，使用 `@hook` 即可监听组件生命周期，组件内无需做任何改变。同样的， `created` 、 `updated` 等也可以使用此方法。 
+
+```vue
+<template>
+	<List @hook:mounted="listenMounted">
+</template>
+```
+
+## 程序化的事件监听器
+
+ 比如，在页面挂载时定义计时器，需要在页面销毁时清除定时器。这看起来没什么问题。但仔细一看 `this.timer` 唯一的作用只是为了能够在 `beforeDestroy` 内取到计时器序号，除此之外没有任何用处。 
+
+```js
+export default{
+    mounted(){
+        this.timer = setInterval(()=>{
+            console.log(Date.now())
+        })
+    },
+    beforeDestroy(){
+        clearInterval(this.timer)
+    }
+}
+```
+
+如果可以的话最好只有生命周期钩子可以访问到它。这并不算严重的问题，但是它可以被视为杂物。
+
+我们可以通过 `$on` 或 `$once` 监听页面生命周期销毁来解决这个问题：
+
+```js
+export default {
+    mounted() {
+        this.creatInterval('hello')
+        this.creatInterval('world')
+    },
+    creatInterval(msg) {
+        let timer = setInterval(() => {
+            console.log(msg)
+        }, 1000)
+        this.$once('hook:beforeDestroy', function() {
+            clearInterval(timer)
+        })
+    }
+}
+
+```
+
+ 使用这个方法后，即使我们同时创建多个计时器，也不影响效果。因为它们会在页面销毁后程序化的自主清除。 
+
+[官网文档程序化的事件侦听器]( [https://cn.vuejs.org/v2/guide/components-edge-cases.html#%E7%A8%8B%E5%BA%8F%E5%8C%96%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8](https://cn.vuejs.org/v2/guide/components-edge-cases.html#程序化的事件侦听器) )
+
+
+
+## 手动挂载组件
+
+ 在一些需求中，手动挂载组件能够让我们实现起来更加优雅。比如一个弹窗组件，最理想的用法是通过命令式调用，就像 `elementUI` 的 `this.$message` 。而不是在模板中通过状态切换，这种实现真的很糟糕。 
+
+message.vue
+
+```vue
+<template>
+  <div class="wrap">
+    <div class="message" :class="item.type" v-for="item in notices" :key="item._name">
+      <div class="content">{{item.content}}</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Vue from "vue";
+// 默认选项
+const DefaultOptions = {
+  duration: 3500,
+  type: "info",
+  content: "这是一条提示信息"
+};
+let mid = 0;
+export default {
+  data() {
+    return {
+      notices: []
+    };
+  },
+  methods: {
+    add(notice = {}) {
+      // name 表示 用于移除弹窗
+      let _name = this.getName();
+      // 合并选项
+      notice = Object.assign({ _name }, DefaultOptions, notice);
+
+      this.notices.push(notice);
+
+      setTimeout(() => {
+        this.removeNotice(_name);
+      }, notice.duration);
+    },
+
+    getName() {
+      return "msg_" + mid++;
+    },
+
+    removeNotice(_name) {
+      let index = this.notices.findIndex(v => v._name === _name);
+      this.notices.splice(index, 1);
+    }
+  }
+};
+</script>
+<style lang="scss" scoped>
+.wrap {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+}
+
+.message {
+  --borderWidth: 3px;
+  min-width: 240px;
+  max-width: 500px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  box-shadow: 0 0 8px #ddd;
+  overflow: hidden;
+}
+
+.content {
+  padding: 8px;
+  line-height: 1.3;
+}
+
+.message.info {
+  border-left: var(--borderWidth) solid #909399;
+  background: #f4f4f5;
+}
+
+.message.success {
+  border-left: var(--borderWidth) solid #67c23a;
+  background: #f0f9eb;
+}
+
+.message.error {
+  border-left: var(--borderWidth) solid #f56c6c;
+  background: #fef0f0;
+}
+
+.message.warning {
+  border-left: var(--borderWidth) solid #e6a23c;
+  background: #fdf6ec;
+}
+</style>>
+```
+
+message.js
+
+```js
+import Vue from 'vue'
+import Index from './message.vue'
+
+let messageInstance = null
+
+let MessageConstructor = Vue.extend(Index)
+
+let init = () => {
+    messageInstance = new MessageConstructor()
+    messageInstance.$mount()
+    document.body.appendChild(messageInstance.$el)
+}
+
+
+let caller = (options) => {
+    if (!messageInstance) {
+        init(options)
+    }
+    messageInstance.add(options)
+}
+
+export default {
+    // 返回 install 函数 用于 Vue.use 注册
+    install(vue) {
+        vue.prototype.$messagerh = caller
+    }
+}
+
+```
+
+main.js
+
+```js
+import Message from '@/components/Message/index.js'
+
+Vue.use(Message)
+```
+
+使用
+
+```js
+this.$message({
+    type: 'success',
+    content: '成功信息提示',
+    duration: 3000
+})
+```
 
 
 
