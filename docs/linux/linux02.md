@@ -90,5 +90,12 @@ cd ~/.ssh
 实现了上述步骤 ，最后就可以使用 `ssh 主机名` 就可以登录了例如上述图片中的 `ssh JoeRh`
 ![](../.vuepress/public/img/linux/linux02_12.png)
 
+### windows 上使用  `netstat -ano|findstr "端口号"` 查看端口号是否被占用
+
+
+
+## mac 上使用 `lsof -i:"端口号"` 查看端口号是否被占用
+
+
 
 <Vssue title="Vssue Demo" />
