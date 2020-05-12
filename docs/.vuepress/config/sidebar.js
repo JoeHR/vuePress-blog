@@ -43,6 +43,13 @@ module.exports = {
         ['vue04', 'vue 相关面试题']
       ],
     },
+        {
+      title: '进阶',
+      collapsable: false,
+      children: [
+        "单例模式"
+      ],
+    },
   ],
   '/linux/': [
     '',
