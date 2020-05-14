@@ -1760,6 +1760,43 @@ undefined       // false
 解析： Javascript 中只有 6个假值： `undefined`、`null`、`NaN`、`0`、`''`(empty string)、`false`
 函数和构造函数和对象都是真值
 
+## 第二十二题、 yield 和 generator
+
+```js
+function* generatorOne(){
+    yield ['a','b','c']
+}
+
+function* generatorTwo(){
+    yield* ['a','b','c']
+}
+
+const one = generatorOne()
+const two = generatorTwo()
+
+console.log(one.next().value)		// ['a','b','c']
+console.log(two.next().value)		// a
+```
+
+通过 `yield` 关键字 ，我们在 `Generator` 函数里执行 `yeild` 表达式，通过`yield*` 关键字，我么可以在一个`Generator`函数里面执行 （`yield`表达式）另一个`Generator`函数，或可遍历的对象（如数组）
+
+在 `GeneratorOne`函数中，我们通过 `yield`关键字 yield 了一个完整的数组`['a','b','c']`。函数 `one`通过 `next`方法返回的对象的 `value`属性的只（`one.next().value`）等价于 `['a','b','c']`
+
+```js
+console.log(one.next().value)		// ['a','b','c']
+console.log(one.next().value)		// undefined
+```
+
+在函数 `generatorTwo`中，我们使用 `yield*`关键字，就相当于 函数 `tow` 第一个`yield`的值，等价于在迭代器中第一个 `yield`的值。数组 `['a','b','c']` 就是这个迭代器。第一个`yield`的值就是 `a`，所以我们第一次调用 `two.next().value`时，就返回 `a`
+
+```js
+console.log(two.next().value)		// a
+console.log(two.next().value)		// b
+console.log(two.next().value)		// c
+console.log(two.next().value)		// undefined
+```
+
 
 
 <Vssue title="Vssue Demo" />
+
