@@ -1739,9 +1739,26 @@ storage1 === storage2		// true
 </html>
 ```
 
+## 第二十一题：下面哪些值是假值
 
+```javascript
 
+0;        // false
 
+new Number(0) ;     // true
+
+('')        // false
+
+('  ')    // true
+
+new Boolean(false)    // true
+
+undefined       // false
+
+```
+
+解析： Javascript 中只有 6个假值： `undefined`、`null`、`NaN`、`0`、`''`(empty string)、`false`
+函数和构造函数和对象都是真值
 
 
 

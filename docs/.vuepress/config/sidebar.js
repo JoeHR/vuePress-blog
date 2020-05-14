@@ -47,7 +47,8 @@ module.exports = {
       title: '进阶',
       collapsable: false,
       children: [
-        "单例模式"
+        ["单例模式","单例模式"],
+        ["浏览器事件","浏览器事件"]
       ],
     },
   ],
