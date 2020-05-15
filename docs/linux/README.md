@@ -14,13 +14,20 @@ lsb_release -a
 uname -a
 ```
 
+## 查看端口是否正常被监听
+```shell
+netstat -an | grep 监听端口
 
-
-
+netstat -an | grep 80
+```
 
 ## 查看公网Ip
 
 curl https://ip.cn ： 查看 公网 ip
+
+curl cip.cc
+
+curl ifconfig.me
 
 
 
