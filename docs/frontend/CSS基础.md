@@ -112,4 +112,16 @@ CSS选择器的优先级是： !important > 行内（内联） > ID选择器 > �
 
 触发以下条件则会产生层叠上下文
 
-- 根元素
+- 根元素 (HTML),
+- z-index 值不为 "auto"的 绝对/相对定位，
+- 一个 z-index 值不为 "auto"的 flex 项目 (flex item)，即：父元素 display: flex|inline-flex，
+- opacity 属性值小于 1 的元素（参考 the specification for opacity），
+- transform 属性值不为 "none"的元素，
+- mix-blend-mode 属性值不为 "normal"的元素，
+- filter值不为“none”的元素，
+- perspective值不为“none”的元素，
+- isolation 属性被设置为 "isolate"的元素，
+- position: fixed
+- 在 will-change 中指定了任意 CSS 属性，即便你没有直接指定这些属性的值（参考 这篇文章）
+- -webkit-overflow-scrolling 属性被设置 "touch"的元素
+
