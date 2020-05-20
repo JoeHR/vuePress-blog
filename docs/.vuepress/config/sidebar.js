@@ -1,3 +1,8 @@
+/*
+ * @Author: rh
+ * @Description: 这不是一个 bug，这只是一个未列出来的特性
+ * @LastEditors: rh
+ */ 
 module.exports = {
   '/test/': [
     {
@@ -31,6 +36,13 @@ module.exports = {
         ['css01', 'css大法'],
         ['css02', 'css小技巧'],
         ['css03', 'css冷门技巧'],
+      ],
+    },
+    {
+      title: 'React学习',
+      collapsable: false,
+      children: [
+        ['react', 'react的相关知识点'],
       ],
     },
     {
