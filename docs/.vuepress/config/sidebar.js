@@ -42,7 +42,7 @@ module.exports = {
       title: 'React学习',
       collapsable: false,
       children: [
-        ['react', 'react的相关知识点'],
+        ['react01', 'react的相关知识点'],
       ],
     },
     {
