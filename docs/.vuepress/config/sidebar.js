@@ -52,7 +52,8 @@ module.exports = {
         ['vue01', 'vue源码学习笔记01'],
         ['vue02', 'vue 函数节流和防抖'],
         ['vue03', 'vue 使用得一些小技巧'],
-        ['vue04', 'vue 相关面试题']
+        ['vue04', 'vue 相关面试题'],
+        ['vue05', 'vue-cli3项目 升级到 vue-cli4']
       ],
     },
         {
