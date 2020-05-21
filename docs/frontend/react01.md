@@ -83,5 +83,66 @@ React组件间通信方式
 
  ![2019-07-31-18-38-37](../.vuepress/public/img/frontend/2ccb1b43c7392d5a0594668fdcbec4de.png) 
 
- ## 
+ ## React如何进行组件/逻辑 复用
+
+抛开已经被官方弃用的Mixin,组件抽象的技术目前有三种比较主流
+
+- 高阶组件
+  + 属性代理
+  + 反向继承
+- 渲染属性
+- react-hooks
+
+
+## mixin,hoc(高阶组件),render Props 、react-hooks 的优劣如何？
+
+mixin 的缺陷：
+
+- 组件与 mixin 之间存在隐式依赖（Mixin 经常依赖组件的特定方法，但在定义组件时并不知道这种依赖关系）
+- 多个 Mixin 之间可能产生冲突（比如定义了相同的state）
+- Mixin 倾向于增加更多状态，这降低了应用的可预测性,导致复杂度剧增
+- 隐式依赖导致依赖关系不透明，维护成本和理解成本迅速攀升
+  + 难以快速理解组件行为，需要全盘了解所有依赖 Mixin 的扩展行为，及其之间的相互影响
+  + 组件自身的方法和state 字段不敢轻易删改，因为难以确定有没有 Mixin 依赖他
+  + Mixin 也难以维护，因为 Mixin 逻辑最后会被合并到一期，很难搞清楚一个 Mixin 的输入输出
+
+
+Hoc 相比 Mixin 的优势
+
+- HOC 通过外层组件通过 props 影响内层组件的状态，而不是直接改变其 state，不存在从图和互相干扰，这就降低了耦合度
+- 不同于 Mixin 的打平 + 合并，HOC 具有天然的层级结构（组件树结构）,这又降低了复杂度
+
+HOC 的缺陷
+
+- 扩展性限制：Hoc 无法从外部访问子组件的state ，因此无法通过 shouldComponentUpdated 过滤掉不必要的更新，React在 支持 ES6 class 之后提供了 React.PureComponent 来解决这个问题
+- Ref 传递问题：Ref 被隔断，后来的 React.forwardRef 来解决这个问题
+- Wrapper Hell: Hoc 可能出现多层包裹组件的情况，多层抽象同样增加了复杂度和理解成本
+- 命名冲突：如果高阶组件多次嵌套，没有使用命名空间的话会产生冲突，然后覆盖老属性
+- 不可见性：Hoc 相当于在原有组件外层再包装一个组件，你压根不知道外层的保障是啥，对于你式黑盒
+
+Render Props 的优点
+
+- 上述HOC 的缺点 Render Props 都可以解决
+
+Render Props 的缺陷
+
+- 使用繁琐: Hoc 使用只需要借助装饰器语法通常一行代码就可以进行复用，Render Props 无法左到如此简单
+- 嵌套过深： Render Props 虽然拜托了组件多层嵌套的问题，但是转化为了函数回调的嵌套
+
+React Hooks 优点
+- 简洁： React Hooks 解决了 Hoc 和 Render Props 的嵌套问题，更加简洁
+- 解耦： React Hooks 可以更方便的把UI 和状态分离，做到更彻底的解耦
+- 组合： Hooks 中可以引用另外的Hooks 形成新的 Hooks ，组合变化万千
+- 函数友好： React Hooks 为函数组件而生，从而解决了类组件的几大问题：
+  + this 指向容易错误
+  + 分割在不同生命周期中的逻辑使的代码难以理解和维护
+  + 代码复用成本高（高阶组件容易使代码量剧增）
+
+React Hooks 的缺陷
+- 额外的学习成本（Functional Component 与 Class Component 之间的困惑）
+- 写法上有限制（不能出现在条件 和 循环中），并且写法限制增加了重构成本
+- 破坏了 PureComponent、React.memo 浅比较的性能优化效果（为了取最新的Props 和 State,每次 render() 都要重新创建事件处理函数）
+- 在闭包场景可能会引用到旧的 state、props 值
+- 内部实现上不直观（依赖一份可变的全局状态，不再那么'纯'）
+- React.memo 并不能完全替代 shouldComponentUpdate (因为拿不到 state change,只针对 props change)
 
