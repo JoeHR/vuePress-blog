@@ -146,3 +146,44 @@ React Hooks 的缺陷
 - 内部实现上不直观（依赖一份可变的全局状态，不再那么'纯'）
 - React.memo 并不能完全替代 shouldComponentUpdate (因为拿不到 state change,只针对 props change)
 
+
+## redux 的工作流程
+
+首先，我们看下几个核心概念：
+
+- Store: 保存数据的地方，你可以把它看成一个容器，整个应用只能有一个Store
+- State: Store 对象包含所有数据，如果想得到某个时刻的数据，就要对 Store 生成快照，这一时刻的数据集合，就叫做 State
+- Action: State 的变化，会导致 View 的变化。但是，用户接触不到 State,只能接触到View。所以，State 的变化必须使View 导致的。Action 就是 View 发出的通知，表示 State 应该要发生变化了。
+- Action Creator: View 要发送多少种消息，就会有多少种Action.如果都手写，会很麻烦，所以我们顶一个一个函数来生成Action,这个函数就叫 Action Creator.
+- Reducer: Store 收到 Action 之后，必须给出一个新的State,这样View 才会发生变化。这种 State 的计算过程就叫做 Reducer。 Reducer 是一个函数，它接受 Action 和 当前 State 作为参数，返回一个新的State。
+- dispatch: 是 View 发出 Action 的唯一方法
+
+然后我们过下整个工作流程：
+
+1、首先，用户（通过View）发出 Action,发出方式就用到了 dispatch 方法
+2、然后，Store 自动调用 Reducer,并且传入两个参数: 当前State 和 收到的Action,Reducer 会返回新的 State
+3、State 一旦有变化，Store 就会调用监听函数，来更新View
+
+到这儿为止，一次用户交互流程结束。可以看到，在整个流程中数据都是单向流动的，这种方式保证了流程的清晰。
+
+ ![2019-08-01-17-29-20](../.vuepress/public/img/frontend/0ab0e624522ae6efef415b53cb923bf7.png) 
+
+
+ ## react-redux 是如何工作的？
+  - Provider: Provider 的作用是从最外部封装了整个应用，并向connect 模块传递 store
+  - connect: 负责链接 React 和 Redux
+    + 获取state: connect 通过 context 获取Provider 中的store,通过 store.getState() 获取整个store tree 上所有state
+    + 包装原组件： 将state 和 action 通过 props 的方式传入到原组件内部 wrapWithConnect 返回一个 ReactComponent 对象Connect,
+      Connect 重新render 外部传入的原组件 WrapperedComponent,并把 connect 中传入的mapStateToProps，mapDispatchToProps 与组件上原有的props合并后，通过属性的方式传给 WrappedComponent
+    + 监听 store tree 变化： connect 缓存了 store tree 中state的状态，通过当前 state 状态和变更前state 状态进行比较，从而确定是否调用`this.setState()`方法触发 Connect 及其子组件的重新渲染
+
+     ![2019-08-01-22-21-51](../.vuepress/public/img/frontend/710f0a9f0a8e6a320f55fa0ca795a3c7.png) 
+
+## redux 中如何进行异步操作
+
+当然我们可以在  `componentDidMount` 中直接进行请求无需借助redux
+
+但在一定规模的项目中，上述方法很难进行异步流的管理，通常情况下我们会借助redux 的异步中间件进行异步处理
+
+redux 异步流中间件其实有很多，但是档下主流的异步中间件只有两种redux-thunk、redux-saga,当然redux-observable 可能也有资格占据一席之地，其余的异步中间件不管是社区活跃度还是npm 下载了都比较差了
+
