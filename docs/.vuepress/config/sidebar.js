@@ -61,7 +61,8 @@ module.exports = {
       collapsable: false,
       children: [
         ["单例模式","单例模式"],
-        ["浏览器事件","浏览器事件"]
+        ["浏览器事件","浏览器事件"],
+        ["虚拟DOM","虚拟DOM简析"]
       ],
     },
   ],
