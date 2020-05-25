@@ -63,7 +63,7 @@ module.exports = {
         ["单例模式", "单例模式"],
         ["浏览器事件", "浏览器事件"],
         ["虚拟DOM", "虚拟DOM简析"],
-        ["call、apply、以及bind的使用与区别.md", "call、apply、及bind得使用与区别"]
+        ["call、apply、以及bind的使用与区别", "call、apply、及bind得使用与区别"]
       ],
     },
   ],
