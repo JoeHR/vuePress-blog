@@ -2,7 +2,7 @@
  * @Author: rh
  * @Description: 这不是一个 bug，这只是一个未列出来的特性
  * @LastEditors: rh
- */ 
+ */
 module.exports = {
   '/test/': [
     {
@@ -56,13 +56,14 @@ module.exports = {
         ['vue05', 'vue-cli3项目 升级到 vue-cli4']
       ],
     },
-        {
+    {
       title: '进阶',
       collapsable: false,
       children: [
-        ["单例模式","单例模式"],
-        ["浏览器事件","浏览器事件"],
-        ["虚拟DOM","虚拟DOM简析"]
+        ["单例模式", "单例模式"],
+        ["浏览器事件", "浏览器事件"],
+        ["虚拟DOM", "虚拟DOM简析"],
+        ["call、apply、以及bind的使用与区别.md", "call、apply、及bind得使用与区别"]
       ],
     },
   ],
