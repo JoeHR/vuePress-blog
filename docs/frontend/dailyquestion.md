@@ -1796,7 +1796,12 @@ console.log(two.next().value)		// c
 console.log(two.next().value)		// undefined
 ```
 
+## 第二十三题、双向绑定和vuex 是否冲突
+当在严格模式中使用 `vuex`时，在属于`vuex`的`state`上使用`v-model`时会导致出错
 
+解决方案：
+- 1、给`<input>` 中绑定value,然后侦听 `input`或者 `change`事件，在事件回调中调用一个方法
+- 2、使用带有`setter`的双向绑定计算属性
 
 <Vssue title="Vssue Demo" />
 
