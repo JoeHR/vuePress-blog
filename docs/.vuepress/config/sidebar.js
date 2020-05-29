@@ -64,7 +64,8 @@ module.exports = {
         ["单例模式", "单例模式"],
         ["浏览器事件", "浏览器事件"],
         ["虚拟Dom", "虚拟DOM简析"],
-        ["call,apply以及bind的使用与区别", "call,apply及bind得使用与区别"]
+        ["call,apply以及bind的使用与区别", "call,apply及bind得使用与区别"],
+        ["性能", "性能检测及加载优化"]
       ],
     },
   ],
