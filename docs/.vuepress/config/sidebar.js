@@ -62,6 +62,7 @@ module.exports = {
       collapsable: false,
       children: [
         ["单例模式", "单例模式"],
+        ["装饰器模式","装饰器模式"],
         ["浏览器事件", "浏览器事件"],
         ["虚拟Dom", "虚拟DOM简析"],
         ["call,apply以及bind的使用与区别", "call,apply及bind得使用与区别"],

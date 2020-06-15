@@ -358,3 +358,6 @@ snabbdom.js已经是社区内主流的Virtual DOM实现了,vue 2.0阶段与snabb
  * A: [a b c d]
  * B: [d a b c]
 ```
+
+
+<Vssue title="Vssue Demo" />

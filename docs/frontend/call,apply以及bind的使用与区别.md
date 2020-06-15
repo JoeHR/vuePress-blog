@@ -176,3 +176,5 @@ Function.prototype.MyBind = function(content){
 }
 
 ```
+
+<Vssue title="Vssue Demo" />
