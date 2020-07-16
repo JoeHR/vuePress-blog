@@ -86,7 +86,7 @@ module.exports = {
     ['redis02', 'redis笔记3'],
   ],
   '/other/': ['', 'gitment'],
-  '/node': [
+  '/node/': [
     '',
     ['centos安装node', 'centos7 快速安装Node 稳定发行版']
   ],
