@@ -62,17 +62,17 @@ module.exports = {
       collapsable: false,
       children: [
         ["单例模式", "单例模式"],
-        ["装饰器模式","装饰器模式"],
+        ["装饰器模式", "装饰器模式"],
         ["浏览器事件", "浏览器事件"],
         ["虚拟Dom", "虚拟DOM简析"],
         ["call,apply以及bind的使用与区别", "call,apply及bind得使用与区别"],
         ["性能", "性能检测及加载优化"],
         ["函数妙用", "高级函数"],
-        ["防篡改对象","防篡改对象"],
-        ["前端埋点","前端监控与埋点"]
+        ["防篡改对象", "防篡改对象"],
+        ["前端埋点", "前端监控与埋点"]
       ],
     },
-    
+
   ],
   '/linux/': [
     '',
@@ -86,7 +86,9 @@ module.exports = {
     ['redis01', 'redis笔记2'],
     ['redis02', 'redis笔记3'],
   ],
-  '/other/': ['', 'gitment'],
+  '/other/': ['', 'gitment',
+    ['vscode插件配置', 'VS Code 配置 Vue 开发环境 - Vetur+ESLint+Prettier（2020）']
+  ],
   '/node/': [
     '',
     ['centos安装node', 'centos7 快速安装Node 稳定发行版']
