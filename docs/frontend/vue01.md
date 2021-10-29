@@ -8,21 +8,32 @@
 
 在看源码的时候，首先需要看的 是 项目的 package.json 文件，该文件配置了 vue 的 依赖以及开发环境和生产环境的编译的启动脚本登其它信息。
 
-```json
-{
-  "name": "vue",
+```js
+{ 
+  // 项目名称
+  "name": "vue", 
+  // 选个木版本   
   "version": "2.6.10",
+  // 项目描述    有利于 别人 发现你的  包 ,方便 npm search 搜索你的包 ，有同样作用的还有关键字 keywords
   "description": "Reactive, component-oriented view layer for modern web interfaces.",
+  // 指定加载的入口文件，require('moduleName') 就会加载这个文件。 默认值为 根目录下面的index.js
+  // 定义了 npm 包的入口文件，browser 环境和 node 环境均可使用    
   "main": "dist/vue.runtime.common.js",
+  // 定义 npm 包的ESM规范的入口文件，browswr 环境 和 node 环境均可使用
   "module": "dist/vue.runtime.esm.js",
+  // npm 上所有的文件都开启 cdn 服务地址    
   "unpkg": "dist/vue.js",
+  // jsdeliver cdn 公共库    
   "jsdelivr": "dist/vue.js",
+  // typescript 的入口文件    
   "typings": "types/index.d.ts",
+  // 当你发布package时，具体那些文件会发布上去    
   "files": [
     "src",
     "dist/*.js",
     "types/*.d.ts"
   ],
+  // 声明该模块是否包含 sideEffects（副作用）,从而可以为 tree-shaking 提供更大的优化空间    
   "sideEffects": false,
   "scripts": {
     "dev": "rollup -w -c scripts/config.js --environment TARGET:web-full-dev",
@@ -54,29 +65,39 @@
     "release:note": "node scripts/gen-release-note.js",
     "commit": "git-cz"
   },
+  // 代码质量检查    
   "gitHooks": {
     "pre-commit": "lint-staged",
     "commit-msg": "node scripts/verify-commit-msg.js"
   },
+  // 代码规范检查    
   "lint-staged": {
     "*.js": [
       "eslint --fix",
       "git add"
     ]
   },
+  // git 仓库所在位置    
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vuejs/vue.git"
   },
+  // 关键词    
   "keywords": [
     "vue"
   ],
+  // 作者    
   "author": "Evan You",
+  // 开源协议    
   "license": "MIT",
+  // bug 地址    
   "bugs": {
     "url": "https://github.com/vuejs/vue/issues"
   },
+  // 主页    
   "homepage": "https://github.com/vuejs/vue#readme",
+  // 依赖    
+  //   dependencies字段指定了项目运行所依赖的模块，devDependencies指定项目开发所需要的模块    
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
@@ -153,6 +174,7 @@
     "weex-styler": "^0.3.0",
     "yorkie": "^2.0.0"
   },
+  // 设置一些用于npm包的脚本命令会用到的配置参数    
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
@@ -161,7 +183,5 @@
 }
 
 ```
-
-
 
 <Vssue title="Vssue Demo" />
