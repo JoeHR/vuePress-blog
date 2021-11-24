@@ -2,10 +2,20 @@
 
 ## 查看 linux 系统发行版本 和内核
 
+- 命令1
 ```
 lsb_release -a
 ```
 
+- 命令2 (该命令仅适用于Redhat系列的Linux系统)
+```
+cat /etc/redhat-release
+```
+
+- 命令3
+```
+cat /etc/issue
+```
 
 
 ## 查看内核版本
@@ -42,13 +52,13 @@ systemctl status firewalld
 - 出现Active: active (running)切高亮显示则表示是启动状态。
 - 出现 Active: inactive (dead)灰色表示停止，看单词也行。
 
-###  查看firewall的状态 
+###  查看firewall的状态
 
 ```
 firewall-cmd --state
 ```
 
-###  开启、重启、关闭、firewalld.service服务 
+###  开启、重启、关闭、firewalld.service服务
 
 - 开启
 
@@ -56,7 +66,7 @@ firewall-cmd --state
   service firewalld start
   ```
 
-  
+
 
 - 重启
 
@@ -64,7 +74,7 @@ firewall-cmd --state
   service firewalld restart
   ```
 
-  
+
 
 - 关闭
 
@@ -72,7 +82,7 @@ firewall-cmd --state
   service firewalld stop
   ```
 
-  
+
 
 ### 查看防火墙规则
 
@@ -98,7 +108,7 @@ firewall-cmd --list-all
   firewall-cmd --permanent --remove-port=8080/tcp
   ```
 
-- 重启防火墙(修改配置后要重启防火墙) 
+- 重启防火墙(修改配置后要重启防火墙)
 
   ```
   firewall-cmd --reload

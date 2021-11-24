@@ -32,7 +32,7 @@ services:
     volumes:
       - /home/redistest:/data
     command: ['redis-server', '--requirepass', '123456']
-		
+
 ```
 
 上传docker-compose.yml 到 /home/redistest 目录,然后运行下面命令即可安装运行  redis 镜像
@@ -58,6 +58,43 @@ docker logs -f redis-test
 放置在公网访问的redis服务需要考虑几点：1. 防火墙规则有没有放行，运营商的防火墙有没有放行 2. bind的IP需要设置成为0.0.0.0，才能让其他所有的服务访问的到（不过这样做也不太安全，需要设置密码），最好是绑定到指定的IP，并设置访问密码
 
 :::
+
+安装方法3:
+
+去 github上下载 redis.conf
+[redis.conf链接地址](https://github.com/redis/redis/blob/6.0.10/redis.conf)
+
+将 redis.conf 拷贝道 /home/myredisconf 目录下
+并修改三处
+
+- 注释掉 `bind 127.0.0.1`
+- 将`protected-mode` 改成 `no` 关闭
+- 将 `appendonly` 改成 `yes`
+
+```
+# bind 127.0.0.1
+protected-mode no
+appendonly yes
+```
+
+然后执行下列命令
+```shell
+docker run -p 6379:6379 --privileged=true --name redis -v /home/myredisconf/redis.conf:/root/redis/redis.conf  -v /home/myredis:/data   -d --restart=always  redis:latest redis-server --appendonly yes
+```
+
+如果出现了 docker redis WARNING: IPv4 forwarding is disabled. Networking will not work. 错误，那么我们需要配置系统的/etc/sysctl.conf
+
+```shell
+
+vi /etc/sysctl.conf
+
+net.ipv4.ip_forward = 1  # 添加这段代码
+
+systemctl restart network && systemctl restart docker  # 重启network服务 和 docker
+
+sysctl net.ipv4.ip_forward # 查看是否修改成功（备注：返回1 就是成功）
+
+```
 
 ## Redis Cli
 
