@@ -13,6 +13,6 @@ git init
 git add -A
 git commit -m 'update docs'
 
-git push -f https://github.com/JoeHR/JoeHR.github.io.git master
+git push -f git@github.com:JoeHR/JoeHR.github.io.git master
 
 cd -
