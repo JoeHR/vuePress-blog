@@ -216,7 +216,7 @@ const App = ({ children }) => (
     <Link to="/about" className={`link ${scoped.className}`}>
       About
     </Link>
-    
+
     {scoped.styles}
   </div>
 );

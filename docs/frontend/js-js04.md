@@ -1,5 +1,3 @@
-
-
 ## 冒泡排序
 
 冒泡排序（Bubble Sort）也是一种简单直观的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢“浮”到数列的顶端。
@@ -31,7 +29,7 @@ function  bubbleSort(arr){
 }
 ```
 
- ![img](../.vuepress/public/img/frontend/mppx.gif) 
+![img](../.vuepress/public/img/frontend/mppx.gif)
 
 ## 选择排序
 
@@ -62,7 +60,7 @@ function selectionSort(arr){
 }
 ```
 
- ![img](../.vuepress/public/img/frontend/xzpx.gif) 
+ ![img](../.vuepress/public/img/frontend/xzpx.gif)
 
 ## 插入排序
 
@@ -92,7 +90,7 @@ function insertionSort(arr){
 }
 ```
 
- ![img](../.vuepress/public/img/frontend/crpx.gif) 
+ ![img](../.vuepress/public/img/frontend/crpx.gif)
 
 ## 希尔排序
 
@@ -179,15 +177,15 @@ function merge(left,right){
             result.push(right.shift())
         }
     }
-    
+
     while(left.length){
         result.push(left.shift());
     }
-    
+
     while(right.length){
         result.push(right.shift());
     }
-    
+
     return result;
 }
 ```
@@ -212,7 +210,7 @@ function quickSort(arr,left,right){
         partitionIndex,
         left = typeof left != 'number' ? 0 : left
     	right = typeof right != 'number' ? len - 1 : right
-    
+
     if(left < right){
         partitionIndex = partition(arr,left,right)
         quickSort(arr,left,partitionIndex - 1)
@@ -225,14 +223,14 @@ function quickSort(arr,left,right){
 function partition(arr,left,right){
     // 设定基准值 pivot
     let pivot = left, index = pivot + 1
-    
+
     for(let i = index;i<=right;i++){
         if(arr[i] < arr[pivot]){
             swap(arr,i,index)
             index++
         }
     }
-    
+
     swap(arr,pivot,index-1)
     return index - 1
 }
@@ -259,12 +257,12 @@ function quickSort2(arr,low,high){
 function partition2(arr,low,high){
     let pivot = arr[low]
     while(low < high){
-        
+
         while (low < high && arr[high] > pivot){
             --high
         }
         arr[low] = arr[high]
-        
+
         while(low < high && arr[low] <= pivot){
             ++low
         }
@@ -275,7 +273,7 @@ function partition2(arr,low,high){
 }
 ```
 
- ![img](../.vuepress/public/img/frontend/kspx.gif) 
+ ![img](../.vuepress/public/img/frontend/kspx.gif)
 
 ## 堆排序
 
@@ -295,7 +293,7 @@ function partition2(arr,low,high){
 
 function heapSort(arr){
     buildMaxHeap(arr)
-    
+
     for(let i=arr.length-1;i>0;i--){
         swap(arr,0,i);
         len--;
@@ -318,15 +316,15 @@ function heapify(arr,i){
         right = 2*i + 2,
         largest = i,
         len = arr.length;
-    
+
     if(left < len && arr[left] > arr[largest]){
         largest = left
     }
-    
+
     if(right < len && arr[right] > arr[largest]){
         largest = right
     }
-    
+
     if(largest != i){
         swap(arr,i,largest);
         heapify(arr,largest)
@@ -340,7 +338,7 @@ function swap(arr,i,j){
 }
 ```
 
- ![img](../.vuepress/public/img/frontend/dpx.gif) 
+ ![img](../.vuepress/public/img/frontend/dpx.gif)
 
 ## 计数排序
 
@@ -352,26 +350,26 @@ function countingSort(arr,maxValue){
         sortedIndex = 0,
         arrlen = arr.length,
         bucketlen = maxValue + 1;
-    
+
     for(let i=0;i<arrlen;i++){
         if(!bucket[arr[i]]){
             bucket[arr[i]] = 0
         }
         bucket[arr[i]]++
     }
-    
+
     for(let j=0;j<bucketlen;j++){
         while(bucket[j] > 0){
             arr[sortedIndex++] = j
             bucket[j]--;
         }
     }
-    
+
     return arr
 }
 ```
 
- ![img](../.vuepress/public/img/frontend/jspx.gif) 
+ ![img](../.vuepress/public/img/frontend/jspx.gif)
 
 
  <Vssue title="Vssue Demo" />

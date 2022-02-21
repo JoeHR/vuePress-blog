@@ -1,9 +1,3 @@
-<!--
- * @Author: rh
- * @Description: 这不是一个 bug，这只是一个未列出来的特性
- * @LastEditors: rh
---> 
-
 ## React 最新的生命周期是怎样的？
 
 React 16 之后有三个生命周期被废弃（但并未被删除）
@@ -81,7 +75,7 @@ React组件间通信方式
 - 发布订阅模式： 发布者发布事件，订阅者监听事件并作出反应，我们可以通过引入 event模块进行通讯
 - 全局状态管理工具： 借助Redux 或者 Mobx 等全局状态管理工具进行通信，这种工具会维护一个全局状态中心 Store，并根据不同的事件产生新的状态
 
- ![2019-07-31-18-38-37](../.vuepress/public/img/frontend/2ccb1b43c7392d5a0594668fdcbec4de.png) 
+ ![2019-07-31-18-38-37](../.vuepress/public/img/frontend/2ccb1b43c7392d5a0594668fdcbec4de.png)
 
  ## React如何进行组件/逻辑 复用
 
@@ -166,7 +160,7 @@ React Hooks 的缺陷
 
 到这儿为止，一次用户交互流程结束。可以看到，在整个流程中数据都是单向流动的，这种方式保证了流程的清晰。
 
- ![2019-08-01-17-29-20](../.vuepress/public/img/frontend/0ab0e624522ae6efef415b53cb923bf7.png) 
+ ![2019-08-01-17-29-20](../.vuepress/public/img/frontend/0ab0e624522ae6efef415b53cb923bf7.png)
 
 
  ## react-redux 是如何工作的？
@@ -177,7 +171,7 @@ React Hooks 的缺陷
       Connect 重新render 外部传入的原组件 WrapperedComponent,并把 connect 中传入的mapStateToProps，mapDispatchToProps 与组件上原有的props合并后，通过属性的方式传给 WrappedComponent
     + 监听 store tree 变化： connect 缓存了 store tree 中state的状态，通过当前 state 状态和变更前state 状态进行比较，从而确定是否调用`this.setState()`方法触发 Connect 及其子组件的重新渲染
 
-     ![2019-08-01-22-21-51](../.vuepress/public/img/frontend/710f0a9f0a8e6a320f55fa0ca795a3c7.png) 
+     ![2019-08-01-22-21-51](../.vuepress/public/img/frontend/710f0a9f0a8e6a320f55fa0ca795a3c7.png)
 
 ## redux 中如何进行异步操作
 
