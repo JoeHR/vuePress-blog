@@ -77,7 +77,8 @@ module.exports = {
         ["advanced-防篡改对象", "防篡改对象"],
         ["advanced-前端监控", "监控"],
         ["advanced-前端埋点", "前端监控与埋点"],
-        ['advanced-dailyquestion',"面试题"]
+        ['advanced-dailyquestion',"面试题"],
+        ['advanced-web前端面试题',"刷面试"],
       ],
     },
 

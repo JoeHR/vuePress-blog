@@ -24,13 +24,13 @@ npm install --global mocha
 npm install --save-dev mocha
 ```
 
->  安装mocha> = v3.0.0，`npm`的版本应该> = v2.14.2。除此，确保使用Node.js的版本> = v4来运行mocha 
+>  安装mocha> = v3.0.0，`npm`的版本应该> = v2.14.2。除此，确保使用Node.js的版本> = v4来运行mocha
 
 ### 测试脚本的编写
 
 
 
- `Mocha`的作用是运行测试脚本，首先必须学会写测试脚本。所谓"测试脚本"，就是用来测试源码的脚本。 
+ `Mocha`的作用是运行测试脚本，首先必须学会写测试脚本。所谓"测试脚本"，就是用来测试源码的脚本。
 
 下面是一个 加法模块 `add.js `的代码
 
@@ -43,9 +43,9 @@ function add(x,y){
 module.exports = add
 ```
 
- 要测试这个加法模块是否正确，就要写测试脚本。 
+ 要测试这个加法模块是否正确，就要写测试脚本。
 
- 通常，测试脚本与所要测试的源码脚本同名，但是后缀名为`.test.js`（表示测试）或者`.spec.js`（表示规格）。比如，`add.js`的测试脚本名字就是[`add.test.js`](https://github.com/ruanyf/mocha-demos/blob/master/demo01/add.test.js)。 
+ 通常，测试脚本与所要测试的源码脚本同名，但是后缀名为`.test.js`（表示测试）或者`.spec.js`（表示规格）。比如，`add.js`的测试脚本名字就是[`add.test.js`](https://github.com/ruanyf/mocha-demos/blob/master/demo01/add.test.js)。
 
 ```
 // add.test.js
@@ -84,9 +84,9 @@ expect（add(1,1)）.to.be.equal(2)
 var expect = require('chai').expect;
 ```
 
- 断言库有很多种，Mocha并不限制使用哪一种。上面代码引入的断言库是[`chai`](http://chaijs.com/)，并且指定使用它的[`expect`](http://chaijs.com/api/bdd/)断言风格。 
+ 断言库有很多种，Mocha并不限制使用哪一种。上面代码引入的断言库是[`chai`](http://chaijs.com/)，并且指定使用它的[`expect`](http://chaijs.com/api/bdd/)断言风格。
 
- `expect`断言的优点是很接近自然语言，下面是一些例子。 
+ `expect`断言的优点是很接近自然语言，下面是一些例子。
 
 ```
 // 相等或不相等
@@ -125,11 +125,11 @@ expect('foobar').to.match(/^foo/);
 it('1 加 1 应该等于 2', function() {});
 ```
 
- 上面的这个测试用例，内部没有任何代码，由于没有抛出了错误，所以还是会通过。 
+ 上面的这个测试用例，内部没有任何代码，由于没有抛出了错误，所以还是会通过。
 
 ### 异步测试
 
- Mocha默认每个测试用例最多执行2000毫秒，如果到时没有得到结果，就报错。对于涉及异步操作的测试用例，这个时间往往是不够的，需要用`-t`或`--timeout`参数指定超时门槛。 
+ Mocha默认每个测试用例最多执行2000毫秒，如果到时没有得到结果，就报错。对于涉及异步操作的测试用例，这个时间往往是不够的，需要用`-t`或`--timeout`参数指定超时门槛。
 
 ```
 it('测试应该5000毫秒后结束', function(done) {
@@ -143,13 +143,13 @@ it('测试应该5000毫秒后结束', function(done) {
 });
 ```
 
- 上面的测试用例，需要4000毫秒之后，才有运行结果。所以，需要用`-t`或`--timeout`参数，改变默认的超时设置。 
+ 上面的测试用例，需要4000毫秒之后，才有运行结果。所以，需要用`-t`或`--timeout`参数，改变默认的超时设置。
 
 ```javascript
 $ mocha -t 5000 timeout.test.js
 ```
 
- 上面命令将测试的超时时限指定为5000毫秒。 
+ 上面命令将测试的超时时限指定为5000毫秒。
 
 另外，上面的测试用例里面，有一个`done`函数。`it`块执行的时候，传入一个`done`参数，当测试结束的时候，必须显式调用这个函数，告诉Mocha测试结束了。否则，Mocha就无法知道，测试是否结束，会一直等到超时报错。你可以把这行删除试试看。
 
@@ -170,13 +170,13 @@ it('异步请求应该返回一个对象', function(done){
 });
 ```
 
- 运行下面命令，可以看到这个测试会通过。 
+ 运行下面命令，可以看到这个测试会通过。
 
 ```
 $ mocha -t 10000 async.test.js
 ```
 
- 另外，Mocha内置对Promise的支持，允许直接返回Promise，等到它的状态改变，再执行断言，而不用显式调用`done`方法。请看[`promise.test.js`](https://github.com/ruanyf/mocha-demos/blob/master/demo05/promise.test.js)。 
+ 另外，Mocha内置对Promise的支持，允许直接返回Promise，等到它的状态改变，再执行断言，而不用显式调用`done`方法。请看[`promise.test.js`](https://github.com/ruanyf/mocha-demos/blob/master/demo05/promise.test.js)。
 
 ```
 it('异步请求应该返回一个对象', function() {
@@ -191,7 +191,7 @@ it('异步请求应该返回一个对象', function() {
 
 ### 测试用例的钩子
 
- Mocha在`describe`块之中，提供测试用例的四个钩子：`before()`、`after()`、`beforeEach()`和`afterEach()`。它们会在指定时间执行。 
+ Mocha在`describe`块之中，提供测试用例的四个钩子：`before()`、`after()`、`beforeEach()`和`afterEach()`。它们会在指定时间执行。
 
 ```
 describe('hooks', function() {
@@ -216,7 +216,7 @@ describe('hooks', function() {
 });
 ```
 
- 进入[`demo06`](https://github.com/ruanyf/mocha-demos/tree/master/demo06)子目录，可以看到下面两个例子。首先是`beforeEach`的例子[`beforeEach.test.js`](https://github.com/ruanyf/mocha-demos/blob/master/demo06/beforeEach.test.js)。 
+ 进入[`demo06`](https://github.com/ruanyf/mocha-demos/tree/master/demo06)子目录，可以看到下面两个例子。首先是`beforeEach`的例子[`beforeEach.test.js`](https://github.com/ruanyf/mocha-demos/blob/master/demo06/beforeEach.test.js)。
 
 ```
 // beforeEach.test.js

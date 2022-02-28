@@ -16,7 +16,7 @@ module.exports = {
     repo: 'https://github.com/JoeHR/vuePress-blog',
     repoLabel: 'Github',
     lastUpdated: '最后更新时间',// 1.接受字符串，它设置了最后更新时间的label，例如：最后更新时间：2019年5月3日 21:51:53   2.设置true，开启最后更新时间  3.设置false，不开启最后更新时间(默认)
-    sidebarDepth: 2,
+    sidebarDepth: 3,
     nav,
     sidebar,
     baiDu:{
