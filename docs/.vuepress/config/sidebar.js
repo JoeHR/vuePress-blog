@@ -16,6 +16,7 @@ module.exports = {
       title: 'javascript',
       collapsable: false,
       children: [
+        ['js-js00', 'JS基础'],
         ['js-js01', '语音合成'],
         ['js-js02', 'JS循环优化'],
         ['js-js03', 'JS前端手写源码'],

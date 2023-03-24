@@ -5,7 +5,7 @@
 #### 1、跳出
 
  大多数前端同学们写嗨了是记不得要break与continue一下的。
-尤其在遍历查找替换某些属性的时候，一定要记得跳出一下，避免不必要的操作。 
+尤其在遍历查找替换某些属性的时候，一定要记得跳出一下，避免不必要的操作。
 
 > break 语句
 
@@ -17,7 +17,7 @@
 let a = null
 for(let i = 0 ;i<10;i++){
     if(i==3) {
-    	a = i; 
+    	a = i;
         break;
     }
     console.log("i现在为" + i + "<br>")
@@ -48,7 +48,7 @@ console.log("循环执行完了，现在 a 为"+a)
 let a = null
 for(let i = 0 ;i<10;i++){
     if(i==3) {
-    	a = i; 
+    	a = i;
         continue ;
     }
     console.log("i现在为" + i + "<br>")
@@ -64,8 +64,8 @@ i现在为0<br>
 // The variable  a isnull<br>
 // i现在为2<br>
 // The variable  a isnull<br>
-    
-    
+
+
 // i现在为4<br>
 // The variable  a is3<br>
 // i现在为5<br>
@@ -84,16 +84,16 @@ i现在为0<br>
 #### 2、缓存变量：
 
  当遍历一个数组时，如果每次循环都从数组中读取length的话来判断的话，必然造成效率浪费。
-所以把length单独提出来缓存为一个变量会稍微提高那么一丢丢的性能。 
+所以把length单独提出来缓存为一个变量会稍微提高那么一丢丢的性能。
 
 代码：
 
 ```javascript
-var arr =[1,2,23,1000];  
+var arr =[1,2,23,1000];
 var len = arr.length;
-for(let i=0;i<len;i++) { 
+for(let i=0;i<len;i++) {
   // doSometing(arr[i]);
-} 
+}
 ```
 
 ### for循环的一些特定用途的替代方法
@@ -102,7 +102,7 @@ for(let i=0;i<len;i++) {
 
 > 语法： array.reduce(callback,[initialValue])
 >
-> 参数解释： 
+> 参数解释：
 >
 > callback: 执行函数，包含四个参数（previousValue、currentValue、index、array）
 >
@@ -137,7 +137,7 @@ const list=[
 const age10ID = list.filter(item=>(
     item.age>10
 ));
-console.log(age10ID); 
+console.log(age10ID);
 ```
 
 #### 3、map()，这个不想写了，平时都写腻了
