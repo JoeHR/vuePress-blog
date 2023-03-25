@@ -20,12 +20,7 @@ html {
 
 <img src="../.vuepress/public/img/阴间滤镜.png" />
 
-
-
 ## 2、 css 阴影效果
-
-
-
 
 <html lang="en">
 <head>
@@ -138,11 +133,7 @@ html {
 </body>
 </html>
 
-
-
 ## 3、调整文字方向
-
-
 
 `writing-mode` 调整文字方向，默认 `horizaontal-tb`横向从左往右书写;设置为 `vertical-rl`即可设置竖向从右往左书写
 
@@ -240,3 +231,62 @@ html {
  </div>
 </body>
 </html>
+
+## 4、单行文本溢出 和 多行文本溢出
+
+- 单行文本溢出
+
+```css
+/* 单行文本溢出省略号 */
+.oneE {
+  width: 300px;
+  height: 30px;
+  line-height: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+```
+
+<style>
+  .oneE{
+    width:300px;
+    height:30px;
+    line-height:30px;
+    white-space:nowrap;
+    overflow:hidden;
+      text-overflow: ellipsis;
+  }
+</style>
+<div class="oneE">这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本</div>
+
+
+- 多行文本溢出
+
+```css
+ .webkit-box{
+    width:300px;
+    height:150px;
+    line-height:30px;
+    overflow:hidden;
+    display: -webkit-box;
+    -webkit-line-clamp:5; /* 限定行数，超出多少行 为 溢出 */
+    -webkit-box-orient:vertical;
+  }
+```
+<style>
+  .webkit-box{
+    width:300px;
+    height:150px;
+    line-height:30px;
+    overflow:hidden;
+    display: -webkit-box;
+    -webkit-line-clamp:5; /* 限定行数，超出多少行 为 溢出 */
+    -webkit-box-orient:vertical;
+  }
+</style>
+<div class="webkit-box">这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本
+这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本这是一段十个字的文本</div>
+
+
+<Vssue title="Vssue Demo" />

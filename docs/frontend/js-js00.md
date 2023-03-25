@@ -158,7 +158,174 @@ radix第二个参数是可选参数，表示进制的基数（2到36之间的整
 - 3、如果输入的 string 以任何其他值开头，radix 是 10 (十进制)
 
 
+## 6、在dom中使用 getElementByClassName 与 querySelectorAll 的区别
 
+> 以下代码为什么运行之后，点击按钮为什么会进入死循环？
+
+```html
+<ul class="list">
+    <li class="list-item">1</li>
+    <li class="list-item">2</li>
+    <li class="list-item">3</li>
+    <li class="list-item">4</li>
+</ul>
+<button>复制一份</button>
+
+```
+
+```js
+ var list = document.getElementsByClassName('list')[0]
+  var listItems = document.getElementsByClassName('list-item')
+  // var listItems = document.querySelectorAll('.list-item')
+  var btn = document.getElementsByTagName('button')[0]
+
+  btn.onclick = function(){
+    for(var i=0; i< listItems.length;i++){
+      console.log('🚀👻👻👻 ~ file: js-js00.md:181 ~ listItems:', listItems)
+      var cloned = listItems[i].cloneNode(true)
+      list.appendChild(cloned)
+    }
+  }
+
+  // 点击按钮后，可以发现页面上并没出现新增复制的 list-item 元素，并且页面已失去响应
+  // 原因：页面已卡死，无响应，因为死循环了，这是因为 getElementsByClassName 方式获取到的元素集合 是一个动态集合，只要页面上元素发生改变，这个集合就会改变，打开控制台，可以看到输出的 listItems 的元素数量在不断增加
+  // 解决方法： 使用 querySelectorAll 即可解决上述死循环问题，querySelectorAll 获取到的元素集合是一个静态集合，获取到的是调用时获取到的元素集合快照
+
+```
+
+## 7、异步观察目标元素与其祖先元素交叉（重叠）状态的API, 上提加载，滚动到底部加载更多
+
+```html
+
+<style>
+.scroll-container{
+  width:300px;
+  height:300px;
+  border:1px solid #e5e5e5;
+  overflow: auto;
+}
+.scroll-content{
+  width:100%;
+  line-height:300px;
+  height:300px;
+  text-align:center;
+  color:red;
+}
+
+.load-more{
+  width:100%;
+  height:50px;
+  background:skyblue;
+  color:#fff;
+  text-align:center;
+  line-height:50px;
+}
+
+</style>
+<div class="scroll-container">
+  <div class="scroll-box">
+    <div class="scroll-content">
+      12313213133132131321
+    </div>
+    <div class="load-more">正在加载更多</div>
+  </div>
+</div>
+<script>
+const loading = document.querySelector('.load-more')
+const originContent = document.querySelector('.scroll-content')
+const contentBox = document.querySelector('.scroll-box');
+const container = document.querySelector('.scroll-container');
+let isLoading = false
+function loadMore(){
+  isLoading = true
+  const cloneContent = originContent.cloneNode(true)
+  contentBox.insertBefore(cloneContent,loading)
+  isLoading = false
+}
+const ob = new IntersectionObserver(function(entries){
+  const entry = entries[0]
+  if(entry.isIntersecting && !isLoading){
+    loadMore()
+  }
+},{
+  thresholds:0.1,
+  root:container
+})
+window.onload=function(){
+  loadMore()
+  ob.observe(loading)
+}
+
+</script>
+
+
+```
+
+滚动大底部将会不断的复制内容插入，以达到模拟滚动到底部加载更多的效果
+
+<style>
+.scroll-container{
+  width:300px;
+  height:300px;
+  border:1px solid #e5e5e5;
+  overflow: auto;
+}
+.scroll-content{
+  width:100%;
+  line-height:300px;
+  height:300px;
+  text-align:center;
+  color:red;
+}
+
+.load-more{
+  width:100%;
+  height:50px;
+  background:skyblue;
+  color:#fff;
+  text-align:center;
+  line-height:50px;
+}
+
+</style>
+<div class="scroll-container">
+  <div class="scroll-box">
+    <div class="scroll-content">
+      12313213133132131321
+    </div>
+    <div class="load-more">正在加载更多</div>
+  </div>
+</div>
+<script>
+const loading = document.querySelector('.load-more')
+const originContent = document.querySelector('.scroll-content')
+const contentBox = document.querySelector('.scroll-box');
+const container = document.querySelector('.scroll-container');
+let isLoading = false
+function loadMore(){
+  isLoading = true
+  const cloneContent = originContent.cloneNode(true)
+  contentBox.insertBefore(cloneContent,loading)
+  isLoading = false
+}
+const ob = new IntersectionObserver(function(entries){
+  const entry = entries[0]
+  if(entry.isIntersecting && !isLoading){
+    loadMore()
+  }
+},{
+  thresholds:0.1,
+  root:container
+})
+window.onload=function(){
+  loadMore()
+  ob.observe(loading)
+}
+
+
+
+
+</script>
 
  <Vssue title="Vssue Demo" />
 

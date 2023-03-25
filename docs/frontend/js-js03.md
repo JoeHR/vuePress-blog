@@ -16,28 +16,28 @@ function ajax(options){
     	async  = options.async === false ? false : true,
         success = options.success,
         headers = options.headers;
-    
+
     let xhr = window.XMLHttpRequest? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
-    
+
     xhr.onreadystatechange = function(){
         if(xhr.readyState===4 && xhr.status === 200){
             success && success(xhr.responseText)
         }
     }
-   	
+
     xhr.open(method,url,async)
-    
+
     if(headers){
         Object.keys(Headers).forEach(key => xhr.setRequestHeader(key,headers[key]))
     }
-    
+
     methoad === 'GET' ? xhr.send() : xhr.send(data)
 }
 ```
 
 **注意**：
 
--  XMLHttpRequest对象状态readyState   是XMLHttpRequest对象的一个属性，用来标识当前XMLHttpRequest对象处于什么状态。 readyState总共有5个状态值，分别为0~4，每个值代表了不同的含义 
+-  XMLHttpRequest对象状态readyState   是XMLHttpRequest对象的一个属性，用来标识当前XMLHttpRequest对象处于什么状态。 readyState总共有5个状态值，分别为0~4，每个值代表了不同的含义
 
 | readyState 状态值 | readyState 状态 | 状态说明                                               |
 | ----------------- | --------------- | ------------------------------------------------------ |
@@ -144,12 +144,12 @@ const jsonp = ({url,params,cb}) => {
     return new Promise((resolve,reject)=>{
         let script = document.createElement('script')
         script.src = url + (/\?/.test(url)?'':'?') + (params ? Object.keys(params).map(key => key + '=' + params[key]).join('&'):'')
-        
+
         window[cb] = (data) => {
             resolve(data)
             document.body.removeChild(script)
         }
-        
+
         document.body.appendChild(script)
     })
 }
@@ -169,7 +169,7 @@ const download = (url,fileName) =>{
     let evt = new MouseEvent('click')
     a.download = fileName
     a.target = '_blank'
-    
+
     // 判断是否 图片 (防止 浏览器 直接打开预览 图片)
     if(imgTypes.includes(fileType)){
         let image = new Image()
@@ -208,7 +208,7 @@ const download = (url,fileName) =>{
 
 ## apply,call,bind
 
->  bind 方法会创建一个新函数。当这个新函数被调用时，bind() 的第一个参数将作为它运行时的 this，之后的一序列参数将会在传递的实参前传入作为它的参数。 
+>  bind 方法会创建一个新函数。当这个新函数被调用时，bind() 的第一个参数将作为它运行时的 this，之后的一序列参数将会在传递的实参前传入作为它的参数。
 
 ```javascript
 Function.prototype.bind = function(content){
@@ -228,7 +228,7 @@ Function.prototype.bind = function(content){
 }
 ```
 
->  call语法：  fun.call(thisArg, arg1, arg2, arg3, .....) 
+>  call语法：  fun.call(thisArg, arg1, arg2, arg3, .....)
 
 call 的核心原理
 
@@ -238,12 +238,22 @@ call 的核心原理
 - 如果不传参数，默认指向 window
 
 ```javascript
-Function.prototype.call = function(content = window){
-    content.fn = this
-    let args = [...arguments].splice(1)
-    let result = content.fn(...args)
-    delete content.fn
-    return result;
+Function.prototype.myCall = function(ctx,...args){
+    // 判断传入的第一个参数是否为null ,数字，undefined 等原始值类型,如果是 null 或 undefined ,则 ctx（this） 指向全局环境,如果为非空的原始值类型，则为对应值类型的对象
+    ctx = ctx === null || ctx===undefined ? globalThis:Object(ctx)
+    var key = Symbol('temp')
+    Object.defineProperty(ctx,key,{
+        enumerable:false,
+        value:this
+    })
+    var result = ctx[key](...args)
+    delete ctx[key]
+    return result
+    // content.fn = this
+    // let args = [...arguments].splice(1)
+    // let result = content.fn(...args)
+    // delete content.fn
+    // return result;
 }
 ```
 
@@ -252,7 +262,7 @@ Function.prototype.call = function(content = window){
 > apply      call  的实现原理差不多，只是参数形式不一样
 
 ```javascript
-// apply 
+// apply
 注意: 当 apply 传入的第一个参数为 null 时，函数体内的this会指向window
 
 Function.prototype.apply = function(content = window){
@@ -307,7 +317,7 @@ function instanceof(left,right){
 
 ## 手写Promise A+规范
 
->  在面试中高级前端时。要求被手写Promise A+规范源码是必考题了。如果想详细了解，请参考 [一步步教你实现Promise/A+ 规范 完整版](https://juejin.im/post/5e2168626fb9a0300d619c9e) 
+>  在面试中高级前端时。要求被手写Promise A+规范源码是必考题了。如果想详细了解，请参考 [一步步教你实现Promise/A+ 规范 完整版](https://juejin.im/post/5e2168626fb9a0300d619c9e)
 
 ## 深浅拷贝
 
@@ -364,7 +374,7 @@ function deepClone(obj){
         return new Date(obj)
     }
     // 不直接创建空对象的目的：克隆的结果和之前保持所属类  =》 即能克隆普通对象，又能克隆某个实例对象
-    let newObj = new obj.constructor;	
+    let newObj = new obj.constructor;
     for(let  key in obj){
         if(obj.hasOwnProperty(key)){
             newObj[key] = deepClone(obj[key])
@@ -376,7 +386,7 @@ function deepClone(obj){
 
 ## Promise
 
- 在面试中高级前端时。要求被手写Promise A+规范源码是必考题了。如果想详细了解，请参考 [一步步教你实现Promise/A+ 规范 完整版](https://juejin.im/post/5e2168626fb9a0300d619c9e) 
+ 在面试中高级前端时。要求被手写Promise A+规范源码是必考题了。如果想详细了解，请参考 [一步步教你实现Promise/A+ 规范 完整版](https://juejin.im/post/5e2168626fb9a0300d619c9e)
 
 - 一个 Promise 的当前状态必须为 等待（pending:可以迁移至执行或拒绝状态）、执行（fulfilled：不能迁移至其他任何状态，且必须拥有一个不可变的终值）、拒绝（reject：不能迁移至任何状态，必须拥有一个不可变的拒因）
 - 一个 Promise 必须提供一个 then 方法以访问其当前值、终值和拒因
@@ -393,11 +403,11 @@ Promise.then(onFulfilled,onRejected)
   * onRejected  在 promise 被拒绝执行后其必须被调用，其第一个参数为 promise 的拒因
   * onFulfilled / onRejected 在 执行结束 / 被拒绝执行  前 不可被调用
   * 调用次数 均不可以超过 一次
-  *  onFulfilled 和 onRejected 只有在执行环境堆栈仅包含平台代码时才可被调用 
-  *  onFulfilled 和 onRejected 必须被作为函数调用（即没有 this 值） 
+  *  onFulfilled 和 onRejected 只有在执行环境堆栈仅包含平台代码时才可被调用
+  *  onFulfilled 和 onRejected 必须被作为函数调用（即没有 this 值）
 - then 方法可以被同一个promise调用多次
-  -  当 promise 成功执行时，所有 onFulfilled 需按照其注册顺序依次回调 
-  -  当 promise 被拒绝执行时，所有的 onRejected 需按照其注册顺序依次回调 
+  -  当 promise 成功执行时，所有 onFulfilled 需按照其注册顺序依次回调
+  -  当 promise 被拒绝执行时，所有的 onRejected 需按照其注册顺序依次回调
 - then 方法必须 返回一个 promise 对象
 
 ```javascript
@@ -406,16 +416,16 @@ class Promise{
 		this.status = 'pending' 		// 初始话状态
          this.value = undefined			// 初始化成功返回的值
          this.reason = undefined		// 初始化失败返回的原因
-        
+
         // 解决处理异步的 resolve
         this.onResolvedCallbacks = []	// 存放所有成功的 resolve
         this.onRejectedCallbacks = [] 	// 存放所有失败的 reject
-        
+
         /**
          *	@param {*} value 成功返回值
          *	定义 resolve 方法
          *	注意： 状态只能从 pending  -> fulfiilled 和 pending -> rejected 两个
-         */ 
+         */
         const resolve = (value)=>{
             if(this.status === 'pending'){
                 this.status = 'fulfilled'	// 成功时将状态转换为成功态 fulfilled
@@ -426,12 +436,12 @@ class Promise{
                 })
             }
         }
-        
+
         /**
          *	@param {*} value 被拒绝执行时返回值
          *	定义 resolve 方法
          *	注意： 状态只能从 pending  -> fulfiilled 和 pending -> rejected 两个
-         */ 
+         */
         const reject = (reason)=>{
             if(this.status === 'pending'){
                 this.status = 'rejected'	// 失败时将状态转换为失败太 rejected
@@ -441,13 +451,13 @@ class Promise{
                 })
             }
         }
-        
+
         executor(resolve,reject)
     }
-    
-    
+
+
     /**
-     * 定义 promise 的 then  方法 
+     * 定义 promise 的 then  方法
      * @param {*} onFulfilled 成功的 回调
      * @Param {*} onRejected 失败的回调
      */
@@ -526,29 +536,29 @@ Vue.directive('drag',{
         const dragDom = el;
         dragDom.style.cssText += ';cursor:move';
         dragDom.style.cssText += 'left:0px;top:0px;'
-        
+
         dragDom.onmousedown = (e)=>{
          	// 鼠标按下，计算当前元素 距离 可视区（父级元素）的距离
             const disX = e.clientX - dragDom.offsetLeft
             const disY = e.clientY - dragDom.offsetTop
-            
+
             const dragDomWidth = dragDom.offsetWidth
             const dragDomHeight = dragDom.offsetHeight
-            
+
             const wrapWidth  = dragDom.offsetParent.clientWidth
             const wrapHeight = dragDom.offsetParent.clientHeight
-            
+
             const minDragDomLeft = dragDom.offsetParent.offsetLeft
             const maxDragDomLeft = wrapWidth - dragDom.offsetParent.offsetLeft - dragDomWidth
-            
+
             const minDragDomTop = dragDom.offsetParent.offsetTop
             const maxDragDomTop = wrapHeight -dragDom.offsetParent.offsetParent.offsetTop - dragDomHeight
-            
+
             document.onmousemove = (e)=>{
                 // 通过事件委托，计算移动的距离
                 let left = e.clientX - disX
                 let top = e.clientY - disY
-                
+
                 // 边界处理
                 if(e.clientX < minDragDomLeft){
                     left = 0
@@ -560,16 +570,16 @@ Vue.directive('drag',{
                 }else if (e.clientY > maxDragDomTop){
                     top = maxDragDomTop
                 }
-                
+
                 // 移动当前元素
                 dragDom.style.cssText += `;left:${left}px;top:${top}px;`
             }
-            
+
             document.onmouseup = (e)=>{
                 document.onmousemove = null
                 document.onmouseup = null
             }
-            
+
             if(e.stopPropagation){
                 e.stopPropagation()
             }else if(e.preventDefault){
