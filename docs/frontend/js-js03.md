@@ -315,10 +315,6 @@ function instanceof(left,right){
 }
 ```
 
-## 手写Promise A+规范
-
->  在面试中高级前端时。要求被手写Promise A+规范源码是必考题了。如果想详细了解，请参考 [一步步教你实现Promise/A+ 规范 完整版](https://juejin.im/post/5e2168626fb9a0300d619c9e)
-
 ## 深浅拷贝
 
 原对象
@@ -526,6 +522,115 @@ const resolvePromise = (promise2,x,resolve,reject) => {
 
 
 module.exports = Promise
+```
+
+### promise 其他方法实现
+
+#### 1、catch 方法
+
+catch 方法是对 `then`方法的封装，只用于接收 `reject(reason)`中的错误信息。因为在`then`方法中`onRejected`参数是可不传的，不传的情况下，错误信息会依次往后传递，知道有`onRejected`函数接收位置，因此在写`promise`链式调用的时候，`then`方法不传`onRejected`函数，只需要在最末尾加一个`catch()`就可以了，这样在该链条中的`promise`发生的错误都会被最后的`catch`捕获到。
+
+```javascript
+
+catch(onRejected){
+    return this.then(null,onRejected)
+}
+
+```
+
+#### 2、done 方法
+
+`catch`在`promise`链式调用的末尾调用，用于捕获链条中的错误信息，但是`catch`方法内部也可能出现错误，所以有些`promise`实现中增加了一个方法`done`,`done`相当于提供了一个不会出错的`cathc`方法，并且不再返回一个`promise`，一般用来结束一个`promise`链。
+
+```javascript
+done(){
+    this.catch(reason=>{
+        console.log(reason)
+        throw reason
+    })
+}
+
+```
+
+#### 3、finally 方法
+
+`finally`方法用于无论是`resolve`还是`reject`,`finally`的参数函数都会被执行。
+
+```javascript
+
+finally(fn){
+    return this.then(val=>{
+        fn();
+        return val
+    },reason=>{
+        fn();
+        throw reason
+    })
+}
+
+```
+
+#### 4、Promise.all 方法
+
+`Promise.all` 方法接收一个 `promise` 数组，返回一个新 `promise2`，并发执行数组中的全部 `promise`，所有`promise`状态都为`resolved`时，`promise2` 状态为 `resolved` 并返回全部`promise`结果，结果顺序会让和`promise`数组顺序一致。如果有一个`promise`为`rejected`状态，则整个`promise2`进入`rejected`状态
+
+```javascript
+
+static all(promiseList){
+    return new Promise((resolve,reject)=>{
+        const result = []
+        let i=0
+        for(const p of promiseList){
+            p.then(val=>{
+                result[i] = val
+                if(result.length === promiseList.length){
+                    resolve(result)
+                }
+            },reject)
+            i++
+        }
+    })
+}
+```
+
+#### 5、Promise.race 方法
+
+`Promise.race` 方法接收一个`promise`数组，返回一个新的`promise2`,顺序执行数组中的`promise`,有一个`promise`状态确定，`promise2`状态即确定，并且同这个`promise`的状态一致。
+
+```javascript
+
+static race(promiseList){
+    return new Promise((resolve,reject)=>{
+        for(const p of promiseList){
+            p.then(val=>{
+                resolve(val)
+            },reject)
+        }
+    })
+}
+
+```
+
+#### 6、Promise.resolve 方法/Promise.reject
+
+Promise.resolve 用来生产一个 resolved 完成态的 promise,Promise.reject 用来生成一个 rejected 失败态的 promise
+
+```javascript
+
+static resolve(val){
+    let promise;
+    promise = new Promise((resolve,reject)=>{
+        resolvePromise(promise,value,resolve,reject)
+    })
+    return promise
+}
+
+static reject(reason){
+    return new Promise((resolve,reject)=>{
+        reject(reason)
+    })
+}
+
 ```
 
 ## vue 拖拽指令

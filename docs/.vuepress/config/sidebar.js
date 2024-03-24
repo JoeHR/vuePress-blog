@@ -21,7 +21,9 @@ module.exports = {
         ['js-js02', 'JS循环优化'],
         ['js-js03', 'JS前端手写源码'],
         ['js-js04', 'JS前端实现十大经典排序算法'],
-        ['js-js05', '一些优秀的工具函数']
+        ['js-js05', '一些优秀的工具函数'],
+        ['js-reduce的使用技巧','reduce的使用技巧'],
+        ['js-promise面试相关','promise面试相关']
       ],
     },
     {
@@ -81,6 +83,13 @@ module.exports = {
         ["advanced-前端埋点", "前端监控与埋点"],
         ['advanced-dailyquestion',"面试题"],
         ['advanced-web前端面试题',"刷面试"],
+      ],
+    },
+    {
+      title: '性能',
+      collapsable: false,
+      children: [
+        ["performance-前端加载超大图片实现秒开解决方案", "前端加载超大图片实现秒开解决方案"],
       ],
     },
 

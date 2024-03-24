@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>js-压缩图片</title>
+    <script src="https://unpkg.com/vue@3.0.5/dist/vue.global.js"></script>
+    <style>
+      .module {
+        width: 1000px;
+        margin: 0 auto;
+        border: 1px solid #eee;
+      }
+      .img-source {
+        display: flex;
+        border-bottom: 1px solid #eee;
+      }
+      .source-url{
+        flex: 1;
+        text-align: center;
+      }
+      .source-file {
+        border-right: 1px solid #eee;
+        height: 50px;
+        flex: 1;
+        text-align: center;
+      }
+      .align-center {
+        display: flex;
+        align-items: center;
+      }
+      .img-info {
+        padding: 10px 0;
+        text-align: center;
+      }
+      .img-flex {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .flex-item{
+        flex: 1;
+        height: 400px;
+        box-sizing: border-box;
+        border: 1px solid #333;
+        padding: 5px;
+      }
+      .flex-item.img-text{
+        text-align: left;
+      }
+      .flex-item.img-box{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .img{
+        max-width: 100%;
+        max-height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      {{value}}
+      <input type="button" value="测试" @click="click" /><br />
+
+      <div class="module">
+        <div class="img-source">
+          <div class="source-file align-center">
+            <input type="file" @change="onFileChange" style="margin: 0 auto;"/>
+          </div>
+          <div class="source-url align-center">
+            <input type="text" style="width: 80%;margin: 0 auto;" placeholder="请输入图片URL" v-model="fileSource.url" />
+          </div>
+        </div>
+        <div class="img-info">
+          <button @click="getImgInfo">获取图片信息</button>
+          <div class="img-flex">
+            <div class="img-box flex-item">
+              <img ref="originImgRef" class="img" src="" alt="暂未提供图片" />
+            </div>
+            <div class="img-text flex-item">
+              <p>图片信息</p>
+              <p>图片名称：{{originImgInfo.name}}</p>
+              <p>mime类型{{originImgInfo.mime}}</p>
+              <p>尺寸:{{originImgInfo.measurements}}</p>
+              <p>大小:{{originImgInfo.size}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="img-info">
+          <button @click="compressImg">开始压缩</button>
+          <div class="img-flex">
+            <div class="img-box flex-item">
+              <img ref="compressImgRef" class="img" src="" alt="暂未提供图片" />
+            </div>
+            <div class="img-text flex-item">
+              <p>图片信息</p>
+              <p>图片名称：{{compressImgInfo.name}}</p>
+              <p>mime类型{{compressImgInfo.mime}}</p>
+              <p>尺寸:{{compressImgInfo.measurements}}</p>
+              <p>大小:{{compressImgInfo.size}}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+  <script type="module">
+    import {fileToDataURL} from './compressImg.tool.js'
+
+    const testApp = () => {
+      const value = Vue.ref('hello world')
+      const originImgRef = Vue.ref(null)
+      const compressImgRef = Vue.ref(null)
+      const originImgInfo = Vue.reactive({
+        name: null,
+        mime: null,
+        measurements: null,
+        size: null,
+      })
+      const compressImgInfo = Vue.reactive({
+        name: null,
+        mime: null,
+        measurements: null,
+        size: null,
+      })
+      const fileSource = Vue.reactive({
+        file: null,
+        url: null
+      })
+      const click = () => {
+        value.value = '好的，收到! ' + new Date()
+      }
+
+      const onFileChange = e => {
+        fileSource.file = e.target.files[0]
+      }
+
+      const getImgInfo = async ()=>{
+        const {file,url} = Vue.toRefs(fileSource)
+        let res = null
+        if(file){
+           res = await fileToDataURL(file.value)
+        }else if(url){
+          res = url
+        }else{
+          return false
+        }
+        originImgRef.value.src = res
+        originImgRef.value.onload=(e)=>{
+          const {naturalWidth,naturalHeight} = e.target
+          originImgInfo.name = file.value.name
+          originImgInfo.mime = file.value.type
+          originImgInfo.measurements = `${naturalWidth}*${naturalHeight}`
+          originImgInfo.size = `${(file.value.size/(1024*1024)).toFixed(2)}MB`
+        }
+      }
+
+      const compressImg = ()=>{ 
+        
+      }
+
+      return { value,originImgRef,compressImgRef, originImgInfo,compressImgInfo, fileSource, onFileChange,getImgInfo,compressImg, click }
+    }
+
+    const AppComposition = {
+      setup() {
+        const { value, originImgInfo, fileSource, click } = testApp()
+        // return {value,originImgInfo,fileSource,click}
+        return { ...testApp() }
+      }
+    }
+
+    const app = Vue.createApp(AppComposition).mount('#app')
+  </script>
+</html>
